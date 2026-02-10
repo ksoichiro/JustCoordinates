@@ -7,7 +7,7 @@ neoForge {
 }
 
 dependencies {
-    compileOnly project(':common-1.21.1')
+    compileOnly project(':common')
 }
 
 sourceSets.main {

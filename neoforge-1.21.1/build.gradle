@@ -28,11 +28,11 @@ configurations {
 }
 
 dependencies {
-    compileOnly project(':common-1.21.1')
+    compileOnly project(':common')
     compileOnly project(':neoforge-base')
 
-    commonJava project(path: ':common-1.21.1', configuration: 'commonJava')
-    commonResources project(path: ':common-1.21.1', configuration: 'commonResources')
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
 }
 
 sourceSets.main {

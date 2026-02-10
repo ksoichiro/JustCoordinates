@@ -12,13 +12,36 @@ plugins {
 
 rootProject.name = 'JustCoordinates'
 
-include 'common-1.21.1'
-include 'fabric-base'
-include 'fabric-1.21.1'
-include 'neoforge-base'
-include 'neoforge-1.21.1'
+def targetMcVersion = providers.gradleProperty('target_mc_version').getOrNull()
+if (targetMcVersion == null) {
+    throw new GradleException("'target_mc_version' property is not defined.")
+}
 
-include 'common-1.20.1'
-include 'forge-base'
-include 'forge-1.20.1'
-include 'fabric-1.20.1'
+def propsFile = file("props/${targetMcVersion}.properties")
+if (!propsFile.exists()) {
+    throw new GradleException("props/${targetMcVersion}.properties not found")
+}
+def versionProps = new Properties()
+propsFile.withInputStream { versionProps.load(it) }
+
+// Inject version-specific properties into all projects
+gradle.beforeProject { project ->
+    versionProps.each { key, value ->
+        if (!project.hasProperty(key)) {
+            project.ext.set(key, value)
+        }
+    }
+}
+
+def enabledPlatforms = versionProps.getProperty('enabled_platforms', '').split(',').collect { it.trim() }
+
+// Common module (directory mapping)
+include 'common'
+project(':common').projectDir = file("common-${targetMcVersion}")
+
+// Platform modules
+enabledPlatforms.each { platform ->
+    include "${platform}-base"
+    include platform
+    project(":${platform}").projectDir = file("${platform}-${targetMcVersion}")
+}

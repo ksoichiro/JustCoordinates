@@ -2,16 +2,6 @@ plugins {
     id 'fabric-loom'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(java_version_1201 as int)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.release = java_version_1201 as int
-}
-
 configurations {
     commonJava {
         canBeResolved = true
@@ -22,16 +12,16 @@ configurations {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:${minecraft_version_1201}"
+    minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version_1201}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
-    compileOnly project(':common-1.20.1')
+    compileOnly project(':common')
     compileOnly project(':fabric-base')
 
-    commonJava project(path: ':common-1.20.1', configuration: 'commonJava')
-    commonResources project(path: ':common-1.20.1', configuration: 'commonResources')
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
 }
 
 sourceSets.main {
@@ -39,7 +29,7 @@ sourceSets.main {
         srcDir rootProject.file('fabric-base/src/main/java')
     }
     resources {
-        srcDir rootProject.file('common-1.20.1/src/main/resources')
+        srcDir rootProject.file("common-${target_mc_version}/src/main/resources")
     }
 }
 
@@ -52,7 +42,7 @@ tasks.named('processResources') {
     filesMatching('fabric.mod.json') {
         expand(
             version: mod_version,
-            minecraft_version: minecraft_version_1201,
+            minecraft_version: minecraft_version,
             fabric_loader_version: fabric_loader_version,
         )
     }

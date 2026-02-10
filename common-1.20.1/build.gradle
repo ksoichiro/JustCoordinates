@@ -2,18 +2,8 @@ plugins {
     id 'net.neoforged.moddev.legacyforge'
 }
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(java_version_1201 as int)
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    options.release = java_version_1201 as int
-}
-
 legacyForge {
-    mcpVersion = mcp_version_1201
+    mcpVersion = mcp_version
 }
 
 sourceSets.main {

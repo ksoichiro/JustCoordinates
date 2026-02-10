@@ -17,11 +17,11 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
-    compileOnly project(':common-1.21.1')
+    compileOnly project(':common')
     compileOnly project(':fabric-base')
 
-    commonJava project(path: ':common-1.21.1', configuration: 'commonJava')
-    commonResources project(path: ':common-1.21.1', configuration: 'commonResources')
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
 }
 
 sourceSets.main {
