@@ -17,3 +17,8 @@ include 'fabric-base'
 include 'fabric-1.21.1'
 include 'neoforge-base'
 include 'neoforge-1.21.1'
+
+include 'common-1.20.1'
+include 'forge-base'
+include 'forge-1.20.1'
+include 'fabric-1.20.1'

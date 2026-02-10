@@ -1,0 +1,70 @@
+plugins {
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(java_version_1201 as int)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = java_version_1201 as int
+}
+
+legacyForge {
+    version = forge_version
+
+    runs {
+        client {
+            client()
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+    }
+    commonResources {
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    compileOnly project(':common-1.20.1')
+    compileOnly project(':forge-base')
+
+    commonJava project(path: ':common-1.20.1', configuration: 'commonJava')
+    commonResources project(path: ':common-1.20.1', configuration: 'commonResources')
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('forge-base/src/main/java')
+    }
+    resources {
+        srcDir rootProject.file('common-1.20.1/src/main/resources')
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn configurations.commonJava
+    source configurations.commonJava
+}
+
+tasks.named('processResources') {
+    filesMatching('META-INF/mods.toml') {
+        expand(
+            version: mod_version,
+            minecraft_version: minecraft_version_1201,
+            forge_version: forge_version,
+        )
+    }
+}

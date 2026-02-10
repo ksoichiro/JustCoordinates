@@ -1,0 +1,39 @@
+plugins {
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(java_version_1201 as int)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = java_version_1201 as int
+}
+
+legacyForge {
+    mcpVersion = mcp_version_1201
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('common-shared/src/main/java')
+    }
+}
+
+configurations {
+    commonJava {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+    commonResources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.srcDirs.first()
+    commonResources sourceSets.main.resources.srcDirs.first()
+}

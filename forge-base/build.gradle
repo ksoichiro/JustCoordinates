@@ -1,0 +1,27 @@
+plugins {
+    id 'net.neoforged.moddev.legacyforge'
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(java_version_1201 as int)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = java_version_1201 as int
+}
+
+legacyForge {
+    version = forge_version
+}
+
+dependencies {
+    compileOnly project(':common-1.20.1')
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('common-shared/src/main/java')
+    }
+}
