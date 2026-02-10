@@ -22,7 +22,7 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 
 | Minecraft | Fabric | NeoForge | Forge |
 |-----------|--------|----------|-------|
-| 1.21.1    | Yes    | Yes      | -     |
+| 1.21.1    | Yes    | Yes      | Yes   |
 | 1.20.1    | Yes    | -        | Yes   |
 
 ## Build
@@ -32,6 +32,7 @@ Build a specific platform for a target Minecraft version using `-Ptarget_mc_vers
 ```
 ./gradlew :fabric:build -Ptarget_mc_version=1.21.1
 ./gradlew :neoforge:build -Ptarget_mc_version=1.21.1
+./gradlew :forge:build -Ptarget_mc_version=1.21.1
 ./gradlew :fabric:build -Ptarget_mc_version=1.20.1
 ./gradlew :forge:build -Ptarget_mc_version=1.20.1
 ```
@@ -46,6 +47,7 @@ Build outputs:
 
 - Fabric 1.21.1: `fabric-1.21.1/build/libs/`
 - NeoForge 1.21.1: `neoforge-1.21.1/build/libs/`
+- Forge 1.21.1: `forge-1.21.1/build/libs/`
 - Fabric 1.20.1: `fabric-1.20.1/build/libs/`
 - Forge 1.20.1: `forge-1.20.1/build/libs/`
 

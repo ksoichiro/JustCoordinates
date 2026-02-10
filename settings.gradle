@@ -3,6 +3,7 @@ pluginManagement {
         gradlePluginPortal()
         maven { url = 'https://maven.fabricmc.net/' }
         maven { url = 'https://maven.neoforged.net/releases/' }
+        maven { url = 'https://maven.minecraftforge.net/' }
     }
 }
 
@@ -41,7 +42,10 @@ project(':common').projectDir = file("common-${targetMcVersion}")
 
 // Platform modules
 enabledPlatforms.each { platform ->
-    include "${platform}-base"
+    def baseDir = file("${platform}-base")
+    if (baseDir.exists()) {
+        include "${platform}-base"
+    }
     include platform
     project(":${platform}").projectDir = file("${platform}-${targetMcVersion}")
 }

@@ -1,21 +1,24 @@
 plugins {
-    id 'net.neoforged.moddev.legacyforge'
+    id 'net.minecraftforge.gradle'
 }
 
-legacyForge {
-    version = forge_version
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    reobf = false
+    copyIdeResources = true
 
     runs {
+        configureEach {
+            workingDirectory project.file('run')
+        }
         client {
-            client()
         }
     }
+}
 
-    mods {
-        "${mod_id}" {
-            sourceSet sourceSets.main
-        }
-    }
+repositories {
+    maven { url = 'https://maven.minecraftforge.net/' }
+    maven { url = 'https://libraries.minecraft.net/' }
 }
 
 configurations {
@@ -28,6 +31,8 @@ configurations {
 }
 
 dependencies {
+    minecraft "net.minecraftforge:forge:${forge_version}"
+
     compileOnly project(':common')
 
     commonJava project(path: ':common', configuration: 'commonJava')
@@ -38,9 +43,6 @@ sourceSets.main {
     java {
         srcDir rootProject.file('common-shared/src/main/java')
     }
-    resources {
-        srcDir rootProject.file("common-${target_mc_version}/src/main/resources")
-    }
 }
 
 tasks.named('compileJava') {
@@ -49,6 +51,9 @@ tasks.named('compileJava') {
 }
 
 tasks.named('processResources') {
+    dependsOn configurations.commonResources
+    from configurations.commonResources
+
     filesMatching('META-INF/mods.toml') {
         expand(
             version: mod_version,
@@ -56,4 +61,11 @@ tasks.named('processResources') {
             forge_version: forge_version,
         )
     }
+}
+
+// Merge resources and classes into the same directory for proper module support
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
 }
