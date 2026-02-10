@@ -5,7 +5,7 @@ A lightweight client-side mod that displays only XYZ coordinates, inspired by Be
 ## Features
 
 - Displays coordinates in the top-left corner with a gray background and white text, matching the Bedrock Edition style
-- Format: `Position: X, Y, Z` (English) / `座標: X, Y, Z` (Japanese)
+- Format: `Position: X, Y, Z`
 - Client-side only — no server installation required
 
 ## F3 Debug Screen
