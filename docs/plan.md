@@ -22,15 +22,15 @@ Multi-loader architecture supporting Fabric / NeoForge with minimal dependencies
 
 ```
 JustCoordinates/
-├── build.gradle.kts          # Root: shared settings
-├── settings.gradle.kts       # Subproject definitions
+├── build.gradle          # Root: shared settings
+├── settings.gradle       # Subproject definitions
 ├── gradle.properties         # Version constants
 ├── gradle/                   # Gradle wrapper
 ├── common-shared/            # *Not a Gradle subproject
 │   └── src/main/java/com/justcoordinates/
 │       └── JustCoordinates.java         # Constants (MOD_ID, etc.)
 ├── common-1.21.1/            # Gradle subproject (ModDevGradle Vanilla mode)
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/
 │       ├── java/com/justcoordinates/
 │       │   └── CoordinatesHudRenderer.java  # HUD rendering logic
@@ -39,19 +39,19 @@ JustCoordinates/
 │               ├── en_us.json
 │               └── ja_jp.json
 ├── fabric-base/              # Gradle subproject
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/java/com/justcoordinates/fabric/
 │       └── JustCoordinatesFabric.java  # Base Fabric ClientModInitializer
 ├── fabric-1.21.1/            # Gradle subproject (depends on fabric-base)
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/resources/
 │       └── fabric.mod.json
 ├── neoforge-base/            # Gradle subproject
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/java/com/justcoordinates/neoforge/
 │       └── JustCoordinatesNeoForge.java  # Base NeoForge entry point
 ├── neoforge-1.21.1/          # Gradle subproject (depends on neoforge-base)
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/resources/
 │       └── META-INF/neoforge.mods.toml
 ├── .gitignore
@@ -67,9 +67,9 @@ Code is shared using the [MultiLoader-Template](https://github.com/jaredlll08/Mu
 
 Compiled by directly adding to each subproject's srcDirs.
 
-```kotlin
-// In each subproject's build.gradle.kts
-sourceSets.main { java { srcDir(rootProject.file("common-shared/src/main/java")) } }
+```groovy
+// In each subproject's build.gradle
+sourceSets.main { java { srcDir rootProject.file('common-shared/src/main/java') } }
 ```
 
 ### common-1.21.1 (Gradle subproject)
@@ -78,21 +78,23 @@ Configured using ModDevGradle Vanilla mode (`neoFormVersion`), exposing sources 
 
 **Note: Do NOT use Fabric Loom for the common module.** It causes circular dependencies (`prepareRemapJar -> jar -> compileJava -> remapJar`).
 
-```kotlin
-// common-1.21.1/build.gradle.kts
+```groovy
+// common-1.21.1/build.gradle
 plugins {
-    java
-    id("net.neoforged.moddev")
+    id 'java'
+    id 'net.neoforged.moddev'
 }
 neoForge {
-    neoFormVersion = "1.21.1-20240808.144430" // Vanilla mode
+    neoFormVersion = '1.21.1-20240808.144430' // Vanilla mode
 }
 // Expose sources via Configuration
-val commonJava by configurations.creating { isCanBeConsumed = true; isCanBeResolved = false }
-val commonResources by configurations.creating { isCanBeConsumed = true; isCanBeResolved = false }
+configurations {
+    commonJava { canBeConsumed = true; canBeResolved = false }
+    commonResources { canBeConsumed = true; canBeResolved = false }
+}
 artifacts {
-    add("commonJava", sourceSets.main.get().java.sourceDirectories.singleFile)
-    add("commonResources", sourceSets.main.get().resources.sourceDirectories.files.first())
+    commonJava sourceSets.main.java.srcDirs.first()
+    commonResources sourceSets.main.resources.srcDirs.first()
 }
 ```
 
@@ -100,17 +102,19 @@ artifacts {
 
 Common-1.21.1 sources and resources are consumed via Configurations and compiled with each loader's toolchain.
 
-```kotlin
-// In each loader's build.gradle.kts
-val commonJava by configurations.creating { isCanBeResolved = true }
-val commonResources by configurations.creating { isCanBeResolved = true }
-dependencies {
-    compileOnly(project(":common-1.21.1"))
-    "commonJava"(project(path = ":common-1.21.1", configuration = "commonJava"))
-    "commonResources"(project(path = ":common-1.21.1", configuration = "commonResources"))
+```groovy
+// In each loader's build.gradle
+configurations {
+    commonJava { canBeResolved = true }
+    commonResources { canBeResolved = true }
 }
-tasks.compileJava { dependsOn(commonJava); source(commonJava) }
-tasks.processResources { dependsOn(commonResources); from(commonResources) }
+dependencies {
+    compileOnly project(':common-1.21.1')
+    commonJava project(path: ':common-1.21.1', configuration: 'commonJava')
+    commonResources project(path: ':common-1.21.1', configuration: 'commonResources')
+}
+tasks.named('compileJava') { dependsOn configurations.commonJava; source configurations.commonJava }
+tasks.named('processResources') { dependsOn configurations.commonResources; from configurations.commonResources }
 ```
 
 ### Mapping Compatibility
@@ -125,10 +129,10 @@ Differences in runtime intermediate mappings (Fabric=Intermediary, NeoForge=SRG)
 Build the Gradle multi-project structure.
 
 1. Generate Gradle wrapper (Gradle 8.11)
-2. `settings.gradle.kts` — Subproject definitions (common-shared is not included)
+2. `settings.gradle` — Subproject definitions (common-shared is not included)
 3. `gradle.properties` — Version constants (see "Key Dependencies" below)
-4. Root `build.gradle.kts` — Shared Java settings (Java 21, encoding, etc.), plugin declarations (`apply false`)
-5. Each subproject's `build.gradle.kts`
+4. Root `build.gradle` — Shared Java settings (Java 21, encoding, etc.), plugin declarations (`apply false`)
+5. Each subproject's `build.gradle`
    - `common-1.21.1`: ModDevGradle Vanilla mode, Configuration exports
    - `fabric-base`: Fabric Loom plugin, Fabric API dependency
    - `fabric-1.21.1`: Fabric Loom, common-1.21.1 Configuration import + fabric-base dependency
@@ -385,25 +389,25 @@ side="CLIENT"
 
 Proven on MultiLoader-Template 1.20.1 branch. Verified to work with Gradle 8.11.
 
-```kotlin
-// common-1.20.1/build.gradle.kts
+```groovy
+// common-1.20.1/build.gradle
 plugins {
-    java
-    id("net.neoforged.moddev.legacyforge")
+    id 'java'
+    id 'net.neoforged.moddev.legacyforge'
 }
 legacyForge {
-    mcpVersion = "1.20.1" // Vanilla mode (not the Forge version)
+    mcpVersion = '1.20.1' // Vanilla mode (not the Forge version)
 }
 // Configuration export follows the same pattern as common-1.21.1
 ```
 
-```kotlin
-// forge-1.20.1/build.gradle.kts
+```groovy
+// forge-1.20.1/build.gradle
 plugins {
-    id("net.neoforged.moddev.legacyforge")
+    id 'net.neoforged.moddev.legacyforge'
 }
 legacyForge {
-    version = "1.20.1-47.4.10"
+    version = '1.20.1-47.4.10'
 }
 // Configuration import follows the same pattern as fabric-1.21.1 / neoforge-1.21.1
 ```
@@ -426,25 +430,25 @@ Mojang official mappings are available across all 3 loaders.
 JustCoordinates/
 ├── ...existing structure...
 ├── common-1.20.1/            # Gradle subproject (legacyforge Vanilla mode)
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/
 │       ├── java/com/justcoordinates/
 │       │   └── CoordinatesHudRenderer.java  # Same as 1.21.1 version or with version-specific changes
 │       └── resources/assets/justcoordinates/lang/
 ├── forge-base/               # Gradle subproject
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/java/com/justcoordinates/forge/
 │       └── JustCoordinatesForge.java
 ├── forge-1.20.1/             # Gradle subproject
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/resources/
 │       └── META-INF/mods.toml
 ├── fabric-1.20.1/            # If also supporting Fabric 1.20.1
-│   ├── build.gradle.kts
+│   ├── build.gradle
 │   └── src/main/resources/
 │       └── fabric.mod.json
 └── neoforge-1.20.1/          # If also supporting NeoForge 1.20.1
-    ├── build.gradle.kts
+    ├── build.gradle
     └── src/main/resources/
         └── META-INF/neoforge.mods.toml
 ```
