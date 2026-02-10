@@ -2,6 +2,8 @@
 
 A lightweight client-side mod that displays only XYZ coordinates, inspired by Bedrock Edition. No minimap, no extra info, no dependencies beyond Fabric API.
 
+![Just Coordinates](docs/screenshots/featured-for-readme.png)
+
 ## Features
 
 - Displays coordinates in the top-left corner with a gray background and white text, matching the Bedrock Edition style
