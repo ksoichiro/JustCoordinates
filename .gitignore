@@ -26,3 +26,6 @@ logs/
 # Java
 *.class
 hs_err_pid*
+
+# Worktrees
+.worktrees/
