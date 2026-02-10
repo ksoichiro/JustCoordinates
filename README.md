@@ -18,20 +18,34 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 
 ## Supported Versions
 
-| Minecraft | Fabric | NeoForge |
-|-----------|--------|----------|
-| 1.21.1    | Yes    | Yes      |
+| Minecraft | Fabric | NeoForge | Forge |
+|-----------|--------|----------|-------|
+| 1.21.1    | Yes    | Yes      | -     |
+| 1.20.1    | Yes    | -        | Yes   |
 
 ## Build
 
+Build a specific platform for a target Minecraft version using `-Ptarget_mc_version`:
+
 ```
-./gradlew build
+./gradlew :fabric:build -Ptarget_mc_version=1.21.1
+./gradlew :neoforge:build -Ptarget_mc_version=1.21.1
+./gradlew :fabric:build -Ptarget_mc_version=1.20.1
+./gradlew :forge:build -Ptarget_mc_version=1.20.1
+```
+
+The default `target_mc_version` is `1.21.1` (defined in `gradle.properties`), so the following also works:
+
+```
+./gradlew :fabric:build
 ```
 
 Build outputs:
 
-- Fabric: `fabric-1.21.1/build/libs/`
-- NeoForge: `neoforge-1.21.1/build/libs/`
+- Fabric 1.21.1: `fabric-1.21.1/build/libs/`
+- NeoForge 1.21.1: `neoforge-1.21.1/build/libs/`
+- Fabric 1.20.1: `fabric-1.20.1/build/libs/`
+- Forge 1.20.1: `forge-1.20.1/build/libs/`
 
 ## License
 

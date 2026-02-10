@@ -12,24 +12,27 @@ Multi-loader architecture supporting Fabric / NeoForge with minimal dependencies
 | Mod ID | `justcoordinates` |
 | Package | `com.justcoordinates` |
 | License | LGPL-3.0-only |
-| Minecraft Version | 1.21.1 |
-| Java Version | 21 |
-| Initial Loaders | Fabric, NeoForge |
-| Deferred | Forge, Quilt |
+| Minecraft Version | 1.21.1, 1.20.1 |
+| Java Version | 21 (1.21.1), 17 (1.20.1) |
+| Loaders | Fabric, NeoForge (1.21.1), Forge (1.20.1) |
+| Deferred | Quilt |
 | Mappings | Mojang official mappings (shared across both loaders) |
 
 ## Directory Structure
 
 ```
 JustCoordinates/
-├── build.gradle          # Root: shared settings
-├── settings.gradle       # Subproject definitions
-├── gradle.properties         # Version constants
+├── build.gradle              # Root: shared settings
+├── settings.gradle           # Dynamic subproject definitions via target_mc_version
+├── gradle.properties         # Shared properties + default target_mc_version
+├── props/
+│   ├── 1.21.1.properties     # MC 1.21.1 version-specific properties
+│   └── 1.20.1.properties     # MC 1.20.1 version-specific properties
 ├── gradle/                   # Gradle wrapper
 ├── common-shared/            # *Not a Gradle subproject
 │   └── src/main/java/com/justcoordinates/
 │       └── JustCoordinates.java         # Constants (MOD_ID, etc.)
-├── common-1.21.1/            # Gradle subproject (ModDevGradle Vanilla mode)
+├── common-1.21.1/            # Mapped as :common when target_mc_version=1.21.1
 │   ├── build.gradle
 │   └── src/main/
 │       ├── java/com/justcoordinates/
@@ -38,11 +41,24 @@ JustCoordinates/
 │           └── assets/justcoordinates/lang/
 │               ├── en_us.json
 │               └── ja_jp.json
+├── common-1.20.1/            # Mapped as :common when target_mc_version=1.20.1
+│   ├── build.gradle
+│   └── src/main/
+│       ├── java/com/justcoordinates/
+│       │   └── CoordinatesHudRenderer.java  # 1.20.1 version
+│       └── resources/
+│           └── assets/justcoordinates/lang/
+│               ├── en_us.json
+│               └── ja_jp.json
 ├── fabric-base/              # Gradle subproject
 │   ├── build.gradle
 │   └── src/main/java/com/justcoordinates/fabric/
 │       └── JustCoordinatesFabric.java  # Base Fabric ClientModInitializer
-├── fabric-1.21.1/            # Gradle subproject (depends on fabric-base)
+├── fabric-1.21.1/            # Mapped as :fabric when target_mc_version=1.21.1
+│   ├── build.gradle
+│   └── src/main/resources/
+│       └── fabric.mod.json
+├── fabric-1.20.1/            # Mapped as :fabric when target_mc_version=1.20.1
 │   ├── build.gradle
 │   └── src/main/resources/
 │       └── fabric.mod.json
@@ -50,10 +66,18 @@ JustCoordinates/
 │   ├── build.gradle
 │   └── src/main/java/com/justcoordinates/neoforge/
 │       └── JustCoordinatesNeoForge.java  # Base NeoForge entry point
-├── neoforge-1.21.1/          # Gradle subproject (depends on neoforge-base)
+├── neoforge-1.21.1/          # Mapped as :neoforge when target_mc_version=1.21.1
 │   ├── build.gradle
 │   └── src/main/resources/
 │       └── META-INF/neoforge.mods.toml
+├── forge-base/               # Gradle subproject
+│   ├── build.gradle
+│   └── src/main/java/com/justcoordinates/forge/
+│       └── JustCoordinatesForge.java  # Base Forge entry point
+├── forge-1.20.1/             # Mapped as :forge when target_mc_version=1.20.1
+│   ├── build.gradle
+│   └── src/main/resources/
+│       └── META-INF/mods.toml
 ├── .gitignore
 ├── LICENSE
 └── README.md
@@ -72,20 +96,19 @@ Compiled by directly adding to each subproject's srcDirs.
 sourceSets.main { java { srcDir rootProject.file('common-shared/src/main/java') } }
 ```
 
-### common-1.21.1 (Gradle subproject)
+### common (Gradle subproject, dynamically mapped)
 
-Configured using ModDevGradle Vanilla mode (`neoFormVersion`), exposing sources and resources to both Fabric and NeoForge via Gradle Configurations.
+Configured using ModDevGradle Vanilla mode, exposing sources and resources to platform modules via Gradle Configurations. The actual directory (`common-1.21.1/` or `common-1.20.1/`) is selected by `target_mc_version`.
 
 **Note: Do NOT use Fabric Loom for the common module.** It causes circular dependencies (`prepareRemapJar -> jar -> compileJava -> remapJar`).
 
 ```groovy
-// common-1.21.1/build.gradle
+// common-1.21.1/build.gradle (mapped as :common)
 plugins {
-    id 'java'
     id 'net.neoforged.moddev'
 }
 neoForge {
-    neoFormVersion = '1.21.1-20240808.144430' // Vanilla mode
+    neoFormVersion = neoform_version // Vanilla mode
 }
 // Expose sources via Configuration
 configurations {
@@ -98,20 +121,20 @@ artifacts {
 }
 ```
 
-### fabric-1.21.1 / neoforge-1.21.1 (Source consumers)
+### Platform modules (Source consumers)
 
-Common-1.21.1 sources and resources are consumed via Configurations and compiled with each loader's toolchain.
+Common sources and resources are consumed via Configurations and compiled with each loader's toolchain. Project references use `:common` (resolved to the version-specific directory by settings.gradle).
 
 ```groovy
-// In each loader's build.gradle
+// In each platform's build.gradle
 configurations {
     commonJava { canBeResolved = true }
     commonResources { canBeResolved = true }
 }
 dependencies {
-    compileOnly project(':common-1.21.1')
-    commonJava project(path: ':common-1.21.1', configuration: 'commonJava')
-    commonResources project(path: ':common-1.21.1', configuration: 'commonResources')
+    compileOnly project(':common')
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
 }
 tasks.named('compileJava') { dependsOn configurations.commonJava; source configurations.commonJava }
 tasks.named('processResources') { dependsOn configurations.commonResources; from configurations.commonResources }
@@ -129,15 +152,18 @@ Differences in runtime intermediate mappings (Fabric=Intermediary, NeoForge=SRG)
 Build the Gradle multi-project structure.
 
 1. Generate Gradle wrapper (Gradle 8.11)
-2. `settings.gradle` — Subproject definitions (common-shared is not included)
-3. `gradle.properties` — Version constants (see "Key Dependencies" below)
-4. Root `build.gradle` — Shared Java settings (Java 21, encoding, etc.), plugin declarations (`apply false`)
-5. Each subproject's `build.gradle`
-   - `common-1.21.1`: ModDevGradle Vanilla mode, Configuration exports
+2. `settings.gradle` — Dynamic subproject definitions via `target_mc_version` property (common-shared is not included)
+3. `gradle.properties` — Shared properties + default `target_mc_version`
+4. `props/*.properties` — Version-specific properties per MC version
+5. Root `build.gradle` — Shared Java settings (encoding, etc.), plugin declarations (`apply false`)
+6. Each subproject's `build.gradle`
+   - `common-{version}`: ModDevGradle Vanilla mode, Configuration exports (mapped as `:common`)
    - `fabric-base`: Fabric Loom plugin, Fabric API dependency
-   - `fabric-1.21.1`: Fabric Loom, common-1.21.1 Configuration import + fabric-base dependency
+   - `fabric-{version}`: Fabric Loom, `:common` Configuration import + fabric-base dependency (mapped as `:fabric`)
    - `neoforge-base`: ModDevGradle plugin
-   - `neoforge-1.21.1`: ModDevGradle, common-1.21.1 Configuration import + neoforge-base dependency
+   - `neoforge-{version}`: ModDevGradle, `:common` Configuration import + neoforge-base dependency (mapped as `:neoforge`)
+   - `forge-base`: ModDevGradle legacyforge plugin
+   - `forge-{version}`: ModDevGradle legacyforge, `:common` Configuration import + forge-base dependency (mapped as `:forge`)
 6. `.gitignore`
 
 ### Phase 2: Common Code
@@ -168,7 +194,7 @@ Implement the Fabric entry point and mod configuration.
    - Mod metadata (id, name, version, description, license, etc.)
    - Entrypoints: client
    - Depends: fabricloader, fabric-api, minecraft
-3. Build verification: `./gradlew :fabric-1.21.1:build`
+3. Build verification: `./gradlew :fabric:build -Ptarget_mc_version=1.21.1`
 
 ### Phase 4: NeoForge Implementation
 
@@ -180,7 +206,7 @@ Implement the NeoForge entry point and mod configuration.
    - Register HUD as a `LayeredDraw.Layer` via `RegisterGuiLayersEvent` (`registerAboveAll`)
 2. `neoforge-1.21.1/src/main/resources/META-INF/neoforge.mods.toml`
    - Mod metadata
-3. Build verification: `./gradlew :neoforge-1.21.1:build`
+3. Build verification: `./gradlew :neoforge:build -Ptarget_mc_version=1.21.1`
 
 ### Phase 5: Documentation & Packaging
 
@@ -191,7 +217,11 @@ Implement the NeoForge entry point and mod configuration.
    - HUD show/hide with the F1 key
    - Supported versions/loaders
    - Build instructions
-3. Full build verification for all loaders: `./gradlew build`
+3. Full build verification for all loaders:
+   ```
+   ./gradlew :fabric:build :neoforge:build -Ptarget_mc_version=1.21.1
+   ./gradlew :fabric:build :forge:build -Ptarget_mc_version=1.20.1
+   ```
 
 ## Technical Notes
 
@@ -205,11 +235,12 @@ Implement the NeoForge entry point and mod configuration.
 
 ### F3 Debug Screen Check
 
-| Loader | Method |
-|--------|--------|
-| Common (Mojang mappings) | `minecraft.getDebugOverlay().showDebugScreen()` |
+| MC Version | Method |
+|------------|--------|
+| 1.21.1 | `minecraft.getDebugOverlay().showDebugScreen()` |
+| 1.20.1 | `minecraft.options.renderDebug` (boolean field) |
 
-Since common code uses Mojang mappings names, there is no difference between loaders.
+Since common code uses Mojang mappings names, there is no difference between loaders within the same MC version. However, `Minecraft.getDebugOverlay()` does NOT exist in 1.20.1.
 
 ### F1 HUD Visibility Check
 
@@ -262,17 +293,17 @@ In Fabric API 0.116 and later, `HudRenderCallback` is deprecated and migration t
 
 ### Key Dependencies
 
-| Dependency | Version |
-|-----------|---------|
-| Minecraft | 1.21.1 |
-| Java | 21 |
-| Gradle | 8.11 |
-| Fabric Loom plugin | 1.9.2 |
-| Fabric Loader | 0.16.9 |
-| Fabric API | 0.116.7+1.21.1 |
-| ModDevGradle plugin | 2.0.140 |
-| NeoForge | 21.1.219 |
-| NeoForm (common Vanilla mode) | 1.21.1-20240808.144430 |
+| Dependency | 1.21.1 | 1.20.1 |
+|-----------|--------|--------|
+| Java | 21 | 17 |
+| Gradle | 8.11 | 8.11 |
+| Fabric Loom plugin | 1.9.2 | 1.9.2 |
+| Fabric Loader | 0.16.10 | 0.16.10 |
+| Fabric API | 0.116.7+1.21.1 | 0.92.6+1.20.1 |
+| ModDevGradle plugin | 2.0.140 | 2.0.140 |
+| NeoForge | 21.1.219 | - |
+| NeoForm (common Vanilla mode) | 1.21.1-20240808.144430 | - |
+| Forge | - | 1.20.1-47.4.10 |
 
 ### Build Pitfalls
 
@@ -390,26 +421,25 @@ side="CLIENT"
 Proven on MultiLoader-Template 1.20.1 branch. Verified to work with Gradle 8.11.
 
 ```groovy
-// common-1.20.1/build.gradle
+// common-1.20.1/build.gradle (mapped as :common when target_mc_version=1.20.1)
 plugins {
-    id 'java'
     id 'net.neoforged.moddev.legacyforge'
 }
 legacyForge {
-    mcpVersion = '1.20.1' // Vanilla mode (not the Forge version)
+    mcpVersion = mcp_version // Vanilla mode (not the Forge version)
 }
 // Configuration export follows the same pattern as common-1.21.1
 ```
 
 ```groovy
-// forge-1.20.1/build.gradle
+// forge-1.20.1/build.gradle (mapped as :forge when target_mc_version=1.20.1)
 plugins {
     id 'net.neoforged.moddev.legacyforge'
 }
 legacyForge {
-    version = '1.20.1-47.4.10'
+    version = forge_version
 }
-// Configuration import follows the same pattern as fabric-1.21.1 / neoforge-1.21.1
+// Configuration import uses :common (resolved to common-1.20.1)
 ```
 
 ### Full Mapping Overview for 3-Loader Support
@@ -424,34 +454,13 @@ Mojang official mappings are available across all 3 loaders.
 
 > **Common sources are written in Mojang mappings and can be shared across all loaders**
 
-### Additional Directories for Forge Support
+### 1.20.1 Directories (included in main directory structure above)
 
-```
-JustCoordinates/
-├── ...existing structure...
-├── common-1.20.1/            # Gradle subproject (legacyforge Vanilla mode)
-│   ├── build.gradle
-│   └── src/main/
-│       ├── java/com/justcoordinates/
-│       │   └── CoordinatesHudRenderer.java  # Same as 1.21.1 version or with version-specific changes
-│       └── resources/assets/justcoordinates/lang/
-├── forge-base/               # Gradle subproject
-│   ├── build.gradle
-│   └── src/main/java/com/justcoordinates/forge/
-│       └── JustCoordinatesForge.java
-├── forge-1.20.1/             # Gradle subproject
-│   ├── build.gradle
-│   └── src/main/resources/
-│       └── META-INF/mods.toml
-├── fabric-1.20.1/            # If also supporting Fabric 1.20.1
-│   ├── build.gradle
-│   └── src/main/resources/
-│       └── fabric.mod.json
-└── neoforge-1.20.1/          # If also supporting NeoForge 1.20.1
-    ├── build.gradle
-    └── src/main/resources/
-        └── META-INF/neoforge.mods.toml
-```
+All 1.20.1 directories are dynamically mapped via `target_mc_version=1.20.1`:
+
+- `common-1.20.1/` → `:common`
+- `fabric-1.20.1/` → `:fabric`
+- `forge-1.20.1/` → `:forge`
 
 ### Notes for Forge Support
 
