@@ -1,6 +1,6 @@
 # Just Coordinates
 
-A lightweight client-side mod that displays only XYZ coordinates, inspired by Bedrock Edition. No minimap, no extra info, no dependencies beyond Fabric API.
+A lightweight client-side mod that displays only XYZ coordinates, inspired by Bedrock Edition. No minimap, no extra info — supports Fabric, NeoForge, and Forge.
 
 ![Just Coordinates](docs/screenshots/featured-for-readme.png)
 
@@ -22,19 +22,27 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 
 | Minecraft | Fabric | NeoForge | Forge |
 |-----------|--------|----------|-------|
+| 1.21.11   | Yes    | Yes      | Yes   |
+| 1.21.10   | Yes    | Yes      | Yes   |
+| 1.21.9    | Yes    | Yes      | Yes   |
+| 1.21.8    | Yes    | Yes      | Yes   |
+| 1.21.7    | Yes    | Yes      | Yes   |
+| 1.21.6    | Yes    | Yes      | Yes   |
+| 1.21.5    | Yes    | Yes      | Yes   |
+| 1.21.4    | Yes    | Yes      | Yes   |
+| 1.21.3    | Yes    | Yes      | Yes   |
 | 1.21.1    | Yes    | Yes      | Yes   |
 | 1.20.1    | Yes    | -        | Yes   |
+| 1.19.2    | Yes    | -        | Yes   |
 
 ## Build
 
 Build a specific platform for a target Minecraft version using `-Ptarget_mc_version`:
 
 ```
-./gradlew :fabric:build -Ptarget_mc_version=1.21.1
-./gradlew :neoforge:build -Ptarget_mc_version=1.21.1
-./gradlew :forge:build -Ptarget_mc_version=1.21.1
-./gradlew :fabric:build -Ptarget_mc_version=1.20.1
-./gradlew :forge:build -Ptarget_mc_version=1.20.1
+./gradlew :fabric:build -Ptarget_mc_version=1.21.11
+./gradlew :neoforge:build -Ptarget_mc_version=1.21.11
+./gradlew :forge:build -Ptarget_mc_version=1.21.11
 ```
 
 The default `target_mc_version` is `1.21.1` (defined in `gradle.properties`), so the following also works:
@@ -43,13 +51,7 @@ The default `target_mc_version` is `1.21.1` (defined in `gradle.properties`), so
 ./gradlew :fabric:build
 ```
 
-Build outputs:
-
-- Fabric 1.21.1: `fabric-1.21.1/build/libs/`
-- NeoForge 1.21.1: `neoforge-1.21.1/build/libs/`
-- Forge 1.21.1: `forge-1.21.1/build/libs/`
-- Fabric 1.20.1: `fabric-1.20.1/build/libs/`
-- Forge 1.20.1: `forge-1.20.1/build/libs/`
+Build outputs are located in `<platform>-<mc_version>/build/libs/` (e.g. `fabric-1.21.11/build/libs/`).
 
 ## License
 
