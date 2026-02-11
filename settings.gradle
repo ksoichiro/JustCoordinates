@@ -42,10 +42,13 @@ project(':common').projectDir = file("common-${targetMcVersion}")
 
 // Platform modules
 enabledPlatforms.each { platform ->
+    def platformDir = file("${platform}-${targetMcVersion}")
     def baseDir = file("${platform}-base")
-    if (baseDir.exists()) {
+    // Include -base only when it exists and the version-specific module does not have its own Java sources
+    def hasOwnSources = new File(platformDir, "src/main/java").exists()
+    if (baseDir.exists() && !hasOwnSources) {
         include "${platform}-base"
     }
     include platform
-    project(":${platform}").projectDir = file("${platform}-${targetMcVersion}")
+    project(":${platform}").projectDir = platformDir
 }
