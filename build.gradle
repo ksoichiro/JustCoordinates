@@ -32,3 +32,5 @@ subprojects {
         }
     }
 }
+
+apply from: 'gradle/multi-version-tasks.gradle'
