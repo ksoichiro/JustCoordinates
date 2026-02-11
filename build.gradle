@@ -23,4 +23,12 @@ subprojects {
         maven { url = 'https://libraries.minecraft.net/' }
         mavenCentral()
     }
+
+    afterEvaluate {
+        if (!project.name.endsWith('-base') && project.name != 'common') {
+            base {
+                archivesName = "${mod_id}-${mod_version}+${minecraft_version}-${project.name}"
+            }
+        }
+    }
 }
