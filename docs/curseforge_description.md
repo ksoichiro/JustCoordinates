@@ -36,7 +36,7 @@ No minimap, no extra info — just your position on screen. Clean and simple.
 ### Multi-Loader Support
 This mod supports **multiple mod loaders** across many Minecraft versions!
 
-| Minecraft | Fabric | NeoForge | Forge |
+| Minecraft | Fabric / Quilt | NeoForge | Forge |
 |-----------|--------|----------|-------|
 | 1.21.11   | Yes    | Yes      | Yes   |
 | 1.21.10   | Yes    | Yes      | Yes   |
@@ -55,6 +55,7 @@ Download the correct version for your Minecraft version and mod loader.
 
 ### Requirements
 - **Fabric**: Fabric Loader + Fabric API
+- **Quilt**: Quilt Loader + Fabric API
 - **NeoForge**: NeoForge (1.21.1+)
 - **Forge**: Forge
 - **No additional dependencies** — just the mod loader and its API

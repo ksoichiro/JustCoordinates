@@ -20,7 +20,7 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 
 ## Supported Versions
 
-| Minecraft | Fabric | NeoForge | Forge |
+| Minecraft | Fabric / Quilt | NeoForge | Forge |
 |-----------|--------|----------|-------|
 | 1.21.11   | Yes    | Yes      | Yes   |
 | 1.21.10   | Yes    | Yes      | Yes   |
