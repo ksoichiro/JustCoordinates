@@ -38,6 +38,8 @@ This mod supports **multiple mod loaders** across many Minecraft versions!
 
 | Minecraft | Fabric | NeoForge | Forge |
 |-----------|--------|----------|-------|
+| 1.21.11   | Yes    | Yes      | Yes   |
+| 1.21.10   | Yes    | Yes      | Yes   |
 | 1.21.9    | Yes    | Yes      | Yes   |
 | 1.21.8    | Yes    | Yes      | Yes   |
 | 1.21.7    | Yes    | Yes      | Yes   |
