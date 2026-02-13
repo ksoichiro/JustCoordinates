@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version "${fabric_loom_version}" apply false
+    // fabric-loom / dev.architectury.loom version is declared in settings.gradle
     id 'net.neoforged.moddev' version "${moddevgradle_version}" apply false
     id 'net.neoforged.moddev.legacyforge' version "${moddevgradle_version}" apply false
     id 'net.minecraftforge.gradle' version "${forgegradle_version}" apply false
@@ -9,8 +9,11 @@ subprojects {
     apply plugin: 'java'
 
     java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(java_version as int)
+        // JDK 8 does not support --release flag; use project JDK with options.release instead
+        if ((java_version as int) >= 9) {
+            toolchain {
+                languageVersion = JavaLanguageVersion.of(java_version as int)
+            }
         }
     }
 

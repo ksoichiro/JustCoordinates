@@ -1,0 +1,23 @@
+modLoader = "javafml"
+loaderVersion = "[36,)"
+license = "LGPL-3.0-only"
+
+[[mods]]
+modId = "justcoordinates"
+version = "${version}"
+displayName = "Just Coordinates"
+description = "Displays simple XYZ coordinates on screen."
+
+[[dependencies.justcoordinates]]
+modId = "forge"
+mandatory = true
+versionRange = "[36,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.justcoordinates]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[${minecraft_version}, 1.17)"
+ordering = "NONE"
+side = "CLIENT"

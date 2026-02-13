@@ -36,6 +36,7 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 | 1.19.2    | Yes    | -        | Yes   |
 | 1.18.2    | Yes    | -        | Yes   |
 | 1.17.1    | Yes    | -        | Yes   |
+| 1.16.5    | Yes    | -        | Yes   |
 
 ## Build
 

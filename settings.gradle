@@ -4,6 +4,19 @@ pluginManagement {
         maven { url = 'https://maven.fabricmc.net/' }
         maven { url = 'https://maven.neoforged.net/releases/' }
         maven { url = 'https://maven.minecraftforge.net/' }
+        maven { url = 'https://maven.architectury.dev/' }
+    }
+
+    // Declare Loom plugin version:
+    // - MC 1.16.5: Use Architectury Loom (supports Forge with Mojang mappings for pre-1.17)
+    // - Other versions: Use Fabric Loom
+    def targetVer = settings.providers.gradleProperty('target_mc_version').getOrNull()
+    plugins {
+        if (targetVer == '1.16.5') {
+            id 'dev.architectury.loom' version settings.providers.gradleProperty('architectury_loom_version').get()
+        } else {
+            id 'fabric-loom' version settings.providers.gradleProperty('fabric_loom_version').get()
+        }
     }
 }
 

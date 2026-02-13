@@ -1,0 +1,30 @@
+plugins {
+    id 'dev.architectury.loom'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    mappings loom.officialMojangMappings()
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('common-shared/src/main/java')
+    }
+}
+
+configurations {
+    commonJava {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+    commonResources {
+        canBeConsumed = true
+        canBeResolved = false
+    }
+}
+
+artifacts {
+    commonJava sourceSets.main.java.srcDirs.first()
+    commonResources sourceSets.main.resources.srcDirs.first()
+}
