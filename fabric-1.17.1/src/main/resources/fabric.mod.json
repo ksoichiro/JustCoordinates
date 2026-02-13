@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "justcoordinates",
+  "version": "${version}",
+  "name": "Just Coordinates",
+  "description": "Displays simple XYZ coordinates on screen.",
+  "authors": [],
+  "license": "LGPL-3.0-only",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "com.justcoordinates.fabric.JustCoordinatesFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
