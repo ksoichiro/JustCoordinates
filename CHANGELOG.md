@@ -11,8 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Minecraft 1.21.7-1.21.11 support with Quilt compatibility
-  - Lowered Fabric Loader version requirements for Quilt loader compatibility
+- Minecraft 1.21.7-1.21.11 support
+  - Quilt compatibility for 1.21.7-1.21.9 (1.21.10+ requires Fabric Loader 0.17.3+ which Quilt does not yet support)
 
 ## [0.1.0] - 2026-02-11
 

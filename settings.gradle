@@ -51,16 +51,17 @@ def enabledPlatforms = versionProps.getProperty('enabled_platforms', '').split('
 
 // Common module (directory mapping)
 include 'common'
-project(':common').projectDir = file("common-${targetMcVersion}")
+project(':common').projectDir = file("common/${targetMcVersion}")
 
 // Platform modules
 enabledPlatforms.each { platform ->
-    def platformDir = file("${platform}-${targetMcVersion}")
-    def baseDir = file("${platform}-base")
+    def platformDir = file("${platform}/${targetMcVersion}")
+    def baseDir = file("${platform}/base")
     // Include -base only when it exists and the version-specific module does not have its own Java sources
     def hasOwnSources = new File(platformDir, "src/main/java").exists()
     if (baseDir.exists() && !hasOwnSources) {
         include "${platform}-base"
+        project(":${platform}-base").projectDir = baseDir
     }
     include platform
     project(":${platform}").projectDir = platformDir

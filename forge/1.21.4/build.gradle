@@ -1,0 +1,71 @@
+plugins {
+    id 'net.minecraftforge.gradle'
+}
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    reobf = false
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+        }
+        client {
+        }
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.minecraftforge.net/' }
+    maven { url = 'https://libraries.minecraft.net/' }
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+    }
+    commonResources {
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${forge_version}"
+
+    compileOnly project(':common')
+
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
+}
+
+sourceSets.main {
+    java {
+        srcDir rootProject.file('common/shared/src/main/java')
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn configurations.commonJava
+    source configurations.commonJava
+}
+
+tasks.named('processResources') {
+    dependsOn configurations.commonResources
+    from configurations.commonResources
+
+    filesMatching('META-INF/mods.toml') {
+        expand(
+            version: mod_version,
+            minecraft_version: minecraft_version,
+            forge_version: forge_version,
+        )
+    }
+}
+
+// Merge resources and classes into the same directory for proper module support
+sourceSets.each {
+    def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
+    it.output.resourcesDir = dir
+    it.java.destinationDirectory = dir
+}
