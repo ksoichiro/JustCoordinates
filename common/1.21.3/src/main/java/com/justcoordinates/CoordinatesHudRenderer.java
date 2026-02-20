@@ -1,9 +1,12 @@
 package com.justcoordinates;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
+import org.lwjgl.glfw.GLFW;
 
 public class CoordinatesHudRenderer {
     private static final int MARGIN = 2;
@@ -11,11 +14,31 @@ public class CoordinatesHudRenderer {
     private static final int TEXT_COLOR = 0xFFFFFFFF;
     private static final int BACKGROUND_COLOR = 0x90505050;
 
+    private static boolean visible = true;
+
+    private static final KeyMapping TOGGLE_KEY = new KeyMapping(
+            "key.justcoordinates.toggle",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_J,
+            "key.categories.justcoordinates"
+    );
+
+    public static KeyMapping getToggleKey() {
+        return TOGGLE_KEY;
+    }
+
+    public static void handleTick() {
+        while (TOGGLE_KEY.consumeClick()) {
+            visible = !visible;
+        }
+    }
+
     public static void render(GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.options.hideGui) return;
         if (mc.getDebugOverlay().showDebugScreen()) return;
         if (mc.player == null) return;
+        if (!visible) return;
 
         int x = Mth.floor(mc.player.getX());
         int y = Mth.floor(mc.player.getY());

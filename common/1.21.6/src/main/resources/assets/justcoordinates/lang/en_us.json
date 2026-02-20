@@ -1,3 +1,5 @@
 {
-  "justcoordinates.hud.position": "Position: %s, %s, %s"
+  "justcoordinates.hud.position": "Position: %s, %s, %s",
+  "key.justcoordinates.toggle": "Toggle Coordinates",
+  "key.categories.justcoordinates": "Just Coordinates"
 }

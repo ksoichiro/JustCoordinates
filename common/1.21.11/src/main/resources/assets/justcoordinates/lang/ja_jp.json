@@ -1,3 +1,5 @@
 {
-  "justcoordinates.hud.position": "座標: %s, %s, %s"
+  "justcoordinates.hud.position": "座標: %s, %s, %s",
+  "key.justcoordinates.toggle": "座標の表示切替",
+  "key.category.justcoordinates.justcoordinates": "Just Coordinates"
 }

@@ -8,6 +8,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 
 @Mod(JustCoordinates.MOD_ID)
 public class JustCoordinatesNeoForge {
@@ -19,6 +21,19 @@ public class JustCoordinatesNeoForge {
             event.registerAboveAll(
                     ResourceLocation.fromNamespaceAndPath(JustCoordinates.MOD_ID, "coordinates_hud"),
                     (guiGraphics, deltaTracker) -> CoordinatesHudRenderer.render(guiGraphics));
+        }
+
+        @SubscribeEvent
+        public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+            event.register(CoordinatesHudRenderer.getToggleKey());
+        }
+    }
+
+    @EventBusSubscriber(modid = JustCoordinates.MOD_ID, value = Dist.CLIENT)
+    public static class ClientTickHandler {
+        @SubscribeEvent
+        public static void onClientTick(ClientTickEvent.Post event) {
+            CoordinatesHudRenderer.handleTick();
         }
     }
 }
