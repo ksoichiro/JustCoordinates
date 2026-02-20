@@ -2,19 +2,31 @@ package com.justcoordinates.forge;
 
 import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.JustCoordinates;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod(JustCoordinates.MOD_ID)
 public class JustCoordinatesForge {
-    public JustCoordinatesForge() {
-        RegisterKeyMappingsEvent.BUS.addListener(event ->
-                event.register(CoordinatesHudRenderer.getToggleKey()));
-        CustomizeGuiOverlayEvent.Chat.BUS.addListener(event ->
-                CoordinatesHudRenderer.render(event.getGuiGraphics()));
-        TickEvent.ClientTickEvent.Post.BUS.addListener(event ->
-                CoordinatesHudRenderer.handleTick());
+
+    @Mod.EventBusSubscriber(modid = JustCoordinates.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+    public static class ClientEvents {
+        @SubscribeEvent
+        public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
+            event.register(CoordinatesHudRenderer.getToggleKey());
+        }
+
+        @SubscribeEvent
+        public static void onRenderOverlay(CustomizeGuiOverlayEvent.Chat event) {
+            CoordinatesHudRenderer.render(event.getGuiGraphics());
+        }
+
+        @SubscribeEvent
+        public static void onClientTick(TickEvent.ClientTickEvent.Post event) {
+            CoordinatesHudRenderer.handleTick();
+        }
     }
 }
