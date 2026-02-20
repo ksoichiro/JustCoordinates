@@ -18,6 +18,7 @@ No minimap, no extra info — just your position on screen. Clean and simple.
 - **Client-Side Only**: No server installation required
 
 ### 🎮 Smart Visibility
+- **Toggle Keybind**: Press `J` to toggle the coordinates HUD on or off (rebindable in Controls settings)
 - **F3 Compatibility**: Coordinates HUD is automatically hidden while the F3 debug screen is displayed
 - **F1 Support**: Follows vanilla HUD behavior — hidden when HUD is toggled off with F1
 

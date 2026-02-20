@@ -8,7 +8,12 @@ A lightweight client-side mod that displays only XYZ coordinates, inspired by Be
 
 - Displays coordinates in the top-left corner with a gray background and white text, matching the Bedrock Edition style
 - Format: `Position: X, Y, Z`
+- Toggle visibility with a keybind (default: `J` key)
 - Client-side only — no server installation required
+
+## Toggle Keybind
+
+Press `J` to toggle the coordinates HUD on or off. The key can be rebound in Options > Controls > Key Binds under the "Just Coordinates" category.
 
 ## F3 Debug Screen
 
