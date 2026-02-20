@@ -22,8 +22,8 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 
 | Minecraft | Fabric | Quilt | NeoForge | Forge |
 |-----------|--------|-------|----------|-------|
-| 1.21.11   | Yes    | -     | Yes      | Yes   |
-| 1.21.10   | Yes    | -     | Yes      | Yes   |
+| 1.21.11   | Yes    | Yes   | Yes      | Yes   |
+| 1.21.10   | Yes    | Yes   | Yes      | Yes   |
 | 1.21.9    | Yes    | Yes   | Yes      | Yes   |
 | 1.21.8    | Yes    | Yes   | Yes      | Yes   |
 | 1.21.7    | Yes    | Yes   | Yes      | Yes   |
