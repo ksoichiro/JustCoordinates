@@ -1,8 +1,8 @@
 plugins {
     // fabric-loom / dev.architectury.loom version is declared in settings.gradle
+    // net.minecraftforge.gradle version is declared in settings.gradle (conditional on MC version)
     id 'net.neoforged.moddev' version "${moddevgradle_version}" apply false
     id 'net.neoforged.moddev.legacyforge' version "${moddevgradle_version}" apply false
-    id 'net.minecraftforge.gradle' version "${forgegradle_version}" apply false
 }
 
 subprojects {
