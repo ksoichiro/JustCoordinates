@@ -39,8 +39,9 @@ This mod supports **multiple mod loaders** across many Minecraft versions!
 
 | Minecraft | Fabric | Quilt | NeoForge | Forge |
 |-----------|--------|-------|----------|-------|
-| 1.21.11   | Yes    | -     | Yes      | Yes   |
-| 1.21.10   | Yes    | -     | Yes      | Yes   |
+| 26.1      | Yes    | Yes   | Yes      | -     |
+| 1.21.11   | Yes    | Yes   | Yes      | Yes   |
+| 1.21.10   | Yes    | Yes   | Yes      | Yes   |
 | 1.21.9    | Yes    | Yes   | Yes      | Yes   |
 | 1.21.8    | Yes    | Yes   | Yes      | Yes   |
 | 1.21.7    | Yes    | Yes   | Yes      | Yes   |
@@ -51,6 +52,9 @@ This mod supports **multiple mod loaders** across many Minecraft versions!
 | 1.21.1    | Yes    | Yes   | Yes      | Yes   |
 | 1.20.1    | Yes    | Yes   | -        | Yes   |
 | 1.19.2    | Yes    | Yes   | -        | Yes   |
+| 1.18.2    | Yes    | Yes   | -        | Yes   |
+| 1.17.1    | Yes    | Yes   | -        | Yes   |
+| 1.16.5    | Yes    | Yes   | -        | Yes   |
 
 Download the correct version for your Minecraft version and mod loader.
 

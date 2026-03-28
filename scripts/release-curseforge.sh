@@ -68,13 +68,19 @@ if [ -z "$VERSION_TYPES" ] || [ "$VERSION_TYPES" = "null" ]; then
   exit 1
 fi
 
-# Find the Minecraft version type ID (e.g., "Minecraft 1.21" for version "1.21.1")
+# Find the Minecraft version type ID.
+# Try exact version first (e.g., "Minecraft 26.1"), then major (e.g., "Minecraft 1.21").
 MC_MAJOR="${GAME_VERSION%.*}"
-MC_TYPE_ID=$(echo "$VERSION_TYPES" | jq --arg mc "Minecraft $MC_MAJOR" \
+MC_TYPE_ID=$(echo "$VERSION_TYPES" | jq --arg mc "Minecraft $GAME_VERSION" \
   '[.[] | select(.name == $mc)] | first | .id // empty')
 
 if [ -z "$MC_TYPE_ID" ]; then
-  echo "Error: Could not find version type for Minecraft $MC_MAJOR" >&2
+  MC_TYPE_ID=$(echo "$VERSION_TYPES" | jq --arg mc "Minecraft $MC_MAJOR" \
+    '[.[] | select(.name == $mc)] | first | .id // empty')
+fi
+
+if [ -z "$MC_TYPE_ID" ]; then
+  echo "Error: Could not find version type for Minecraft $GAME_VERSION or $MC_MAJOR" >&2
   exit 1
 fi
 

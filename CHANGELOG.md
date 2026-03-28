@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-03-29
+
+### Added
+
+- Minecraft 26.1 support for Fabric and NeoForge (Forge is pending due to a Forge-side startup crash)
+- CurseForge release scripts
+
+### Changed
+
+- Upgraded Gradle wrapper from 8.14.4 to 9.4.0
+- Migrated all Forge 1.21.x builds from ForgeGradle 6.x to 7.x
+- Updated Fabric Loom to 1.15.5, ModDevGradle to 2.0.141
+- Replaced `project.exec()` with `ProcessBuilder` in multi-version build tasks (Gradle 9 compatibility)
+
 ## [0.2.0] - 2026-02-20
 
 ### Added
@@ -37,7 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-loader support: Fabric, NeoForge, Forge
 - Minecraft version support: 1.19.2, 1.20.1, 1.21.1, 1.21.3-1.21.11
 
-[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/ksoichiro/JustCoordinates/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/ksoichiro/JustCoordinates/releases/tag/v0.1.0
