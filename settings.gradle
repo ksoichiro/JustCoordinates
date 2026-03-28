@@ -1,5 +1,6 @@
 pluginManagement {
     repositories {
+        mavenLocal()
         gradlePluginPortal()
         maven { url = 'https://maven.fabricmc.net/' }
         maven { url = 'https://maven.neoforged.net/releases/' }
@@ -58,12 +59,10 @@ gradle.beforeProject { project ->
 def enabledPlatforms = versionProps.getProperty('enabled_platforms', '').split(',').collect { it.trim() }
 
 // ForgeGradle 6.x (MC 1.21.x) is not compatible with Gradle 9.
-// ForgeGradle 7.x (MC 26.x+) has a JvmVendorSpec.IBM_SEMERU bug on Gradle 9.
-// TODO: Re-enable forge when ForgeGradle 7.x fixes the IBM_SEMERU issue
-if (GradleVersion.current() >= GradleVersion.version('9.0')) {
-    if (enabledPlatforms.remove('forge')) {
-        logger.warn("Forge builds are temporarily disabled on Gradle 9.x (ForgeGradle compatibility issue)")
-    }
+// ForgeGradle 7.x (MC 26.x+) requires Mavenizer 0.4.54+ for Gradle 9 (IBM_SEMERU fix).
+// Only enable forge for MC versions that use ForgeGradle 7.x (26.x+).
+if (GradleVersion.current() >= GradleVersion.version('9.0') && targetMcVersion.startsWith('1.')) {
+    enabledPlatforms.remove('forge')
 }
 
 // Common module (directory mapping)

@@ -32,3 +32,6 @@ hs_err_pid*
 
 # Worktrees
 .worktrees/
+
+# Local builds (e.g., ForgeGradle from source)
+.local/
