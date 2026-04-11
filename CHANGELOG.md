@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-04-11
+
 ### Added
 
 - Minecraft 26.1.1 and 26.1.2 support for Fabric, NeoForge, and Forge
@@ -55,7 +57,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-loader support: Fabric, NeoForge, Forge
 - Minecraft version support: 1.19.2, 1.20.1, 1.21.1, 1.21.3-1.21.11
 
-[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.3.0...HEAD
+[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/ksoichiro/JustCoordinates/compare/v0.1.0...v0.1.1
