@@ -6,6 +6,11 @@ minecraft {
     runs {
         configureEach {
             workingDir = layout.projectDirectory.dir('run')
+            // macOS requires -XstartOnFirstThread for GLFW; FG7 does not auto-add it
+            // unlike Fabric Loom and ModDevGradle.
+            if (org.gradle.internal.os.OperatingSystem.current().isMacOsX()) {
+                jvmArgs '-XstartOnFirstThread'
+            }
         }
         register('client')
     }
