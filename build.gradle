@@ -8,6 +8,18 @@ plugins {
 subprojects {
     apply plugin: 'java'
 
+    // The shared "-base" modules (fabric/base, neoforge/base) map a single
+    // directory to every Minecraft version. During `buildAll`, versions build
+    // concurrently in separate Gradle processes; --project-cache-dir isolates
+    // the .gradle cache but NOT the subproject build/ output. Without this,
+    // each process would clean/compile into the SAME <platform>/base/build/,
+    // racing destructively and failing with "Could not store compilation
+    // result". Give each version its own output dir to keep concurrent builds
+    // isolated. Version-specific modules already use per-version directories.
+    if (project.name.endsWith('-base')) {
+        layout.buildDirectory.set(file("${projectDir}/build/${project.property('target_mc_version')}"))
+    }
+
     java {
         // JDK 8 does not support --release flag; use project JDK with options.release instead
         if ((java_version as int) >= 9) {
