@@ -47,11 +47,6 @@ When the HUD is hidden using F1, the coordinates will also be hidden. This follo
 | 1.17.1    | Yes    | Yes   | -        | Yes   |
 | 1.16.5    | Yes    | Yes   | -        | Yes   |
 
-> **Note on 1.21.6:** Fully supported. The released build works as-is and is
-> functionally identical to the other versions, so no separate update is needed.
-> It is temporarily excluded from automated rebuilds because of an upstream
-> ForgeGradle (Vineflower) decompiler issue; this does not affect usage.
-
 ## Build
 
 Build a specific platform for a target Minecraft version using `-Ptarget_mc_version`:

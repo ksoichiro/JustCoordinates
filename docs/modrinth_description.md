@@ -59,8 +59,6 @@ This mod supports **multiple mod loaders** across many Minecraft versions!
 | 1.17.1    | Yes    | Yes   | -        | Yes   |
 | 1.16.5    | Yes    | Yes   | -        | Yes   |
 
-> **1.21.6:** Fully supported — the current release works as-is with no functional difference, so no separate update is needed.
-
 Download the correct version for your Minecraft version and mod loader.
 
 ### Requirements

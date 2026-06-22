@@ -53,20 +53,6 @@ Per-version platforms (incl. Forge) come from `enabled_platforms` in
 `props/{version}.properties`. Fabric builds are also tagged Quilt-compatible
 (`release_quilt_compatible=true`).
 
-> **1.21.6 build exclusion:** 1.21.6 is omitted from `supported_mc_versions`
-> (the build matrix) but its `props/`, `common/1.21.6/`, etc. are kept and it
-> stays in the user-facing Supported Versions tables. ForgeGradle 7's mavenizer
-> cannot decompile MC 1.21.6 (`EntitySectionStorage` → `$VF: Couldn't be
-> decompiled`); forcing a newer decompiler (Vineflower 1.12.0) instead breaks
-> Forge's patches. **Verified as a ForgeGradle 6→7 regression:** the same 1.21.6
-> (Forge 56.0.9, Vineflower 1.11.1) builds fine under the pre-MC-26 toolchain
-> (Gradle 8.14 + ForgeGradle 6.x, commit `91d11c4`) but fails under the current
-> Gradle 9 + ForgeGradle 7.x adopted for MC 26 support. A per-version FG split is
-> not viable (FG6 needs Gradle 8, FG7 needs Gradle 9 — they cannot coexist). The
-> mod still supports 1.21.6 via the already-released, functionally-identical
-> build. Re-add once ForgeGradle fixes the FG7 decompile regression; verify with
-> `./gradlew :forge:build -Ptarget_mc_version=1.21.6`.
-
 ## Architecture
 
 - `common/shared/` — Constants (JustCoordinates.java), compiled into each platform via srcDir
