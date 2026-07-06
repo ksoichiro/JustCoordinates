@@ -55,13 +55,14 @@ public class CoordinatesHudRenderer {
         int textWidth = mc.font.width(text);
         int textHeight = mc.font.lineHeight;
 
-        int bgX1 = MARGIN;
-        int bgY1 = MARGIN;
-        int bgX2 = MARGIN + PADDING + textWidth + PADDING;
-        int bgY2 = MARGIN + PADDING + textHeight + PADDING;
+        int hudWidth = PADDING + textWidth + PADDING;
+        int hudHeight = PADDING + textHeight + PADDING;
+        HudPosition position = HudConfig.getPosition();
+        int bgX1 = position.resolveX(guiGraphics.guiWidth(), hudWidth, MARGIN);
+        int bgY1 = position.resolveY(guiGraphics.guiHeight(), hudHeight, MARGIN);
 
-        guiGraphics.fill(bgX1, bgY1, bgX2, bgY2, BACKGROUND_COLOR);
+        guiGraphics.fill(bgX1, bgY1, bgX1 + hudWidth, bgY1 + hudHeight, BACKGROUND_COLOR);
         guiGraphics.drawString(mc.font, text,
-                MARGIN + PADDING, MARGIN + PADDING, TEXT_COLOR);
+                bgX1 + PADDING, bgY1 + PADDING, TEXT_COLOR);
     }
 }
