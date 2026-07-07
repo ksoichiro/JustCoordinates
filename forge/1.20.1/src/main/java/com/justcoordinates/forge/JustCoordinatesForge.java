@@ -30,6 +30,7 @@ public class JustCoordinatesForge {
         @SubscribeEvent
         public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
             event.register(CoordinatesHudRenderer.getToggleKey());
+            event.register(CoordinatesHudRenderer.getOpenConfigKey());
         }
     }
 

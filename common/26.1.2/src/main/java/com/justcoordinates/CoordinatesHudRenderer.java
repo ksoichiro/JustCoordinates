@@ -27,13 +27,27 @@ public class CoordinatesHudRenderer {
             CATEGORY
     );
 
+    private static final KeyMapping OPEN_CONFIG_KEY = new KeyMapping(
+            "key.justcoordinates.open_config",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_UNKNOWN,
+            CATEGORY
+    );
+
     public static KeyMapping getToggleKey() {
         return TOGGLE_KEY;
+    }
+
+    public static KeyMapping getOpenConfigKey() {
+        return OPEN_CONFIG_KEY;
     }
 
     public static void handleTick() {
         while (TOGGLE_KEY.consumeClick()) {
             visible = !visible;
+        }
+        while (OPEN_CONFIG_KEY.consumeClick()) {
+            Minecraft.getInstance().setScreen(new ConfigScreen(null));
         }
     }
 

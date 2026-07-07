@@ -24,6 +24,7 @@ public class JustCoordinatesForge {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             ClientRegistry.registerKeyBinding(CoordinatesHudRenderer.getToggleKey());
+            ClientRegistry.registerKeyBinding(CoordinatesHudRenderer.getOpenConfigKey());
         }
     }
 

@@ -13,8 +13,10 @@ import net.minecraftforge.fml.loading.FMLPaths;
 public class JustCoordinatesForge {
     public JustCoordinatesForge() {
         HudConfig.load(FMLPaths.CONFIGDIR.get());
-        RegisterKeyMappingsEvent.BUS.addListener(event ->
-                event.register(CoordinatesHudRenderer.getToggleKey()));
+        RegisterKeyMappingsEvent.BUS.addListener(event -> {
+            event.register(CoordinatesHudRenderer.getToggleKey());
+            event.register(CoordinatesHudRenderer.getOpenConfigKey());
+        });
         CustomizeGuiOverlayEvent.Chat.BUS.addListener(event ->
                 CoordinatesHudRenderer.render(event.getGuiGraphics()));
         TickEvent.ClientTickEvent.Post.BUS.addListener(event ->
