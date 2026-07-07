@@ -1,5 +1,14 @@
 {
   "justcoordinates.hud.position": "Position: %s, %s, %s",
   "key.justcoordinates.toggle": "Toggle Coordinates",
-  "key.category.justcoordinates.justcoordinates": "Just Coordinates"
+  "key.category.justcoordinates.justcoordinates": "Just Coordinates",
+  "justcoordinates.config.title": "Just Coordinates",
+  "justcoordinates.config.position": "Position",
+  "justcoordinates.position.top_left": "Top Left",
+  "justcoordinates.position.top_center": "Top Center",
+  "justcoordinates.position.top_right": "Top Right",
+  "justcoordinates.position.bottom_left": "Bottom Left",
+  "justcoordinates.position.bottom_center": "Bottom Center",
+  "justcoordinates.position.bottom_right": "Bottom Right",
+  "key.justcoordinates.open_config": "Open Settings"
 }

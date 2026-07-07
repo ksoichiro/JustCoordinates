@@ -1,5 +1,14 @@
 {
   "justcoordinates.hud.position": "座標: %s, %s, %s",
   "key.justcoordinates.toggle": "座標の表示切替",
-  "key.category.justcoordinates.justcoordinates": "Just Coordinates"
+  "key.category.justcoordinates.justcoordinates": "Just Coordinates",
+  "justcoordinates.config.title": "Just Coordinates",
+  "justcoordinates.config.position": "表示位置",
+  "justcoordinates.position.top_left": "左上",
+  "justcoordinates.position.top_center": "上中央",
+  "justcoordinates.position.top_right": "右上",
+  "justcoordinates.position.bottom_left": "左下",
+  "justcoordinates.position.bottom_center": "下中央",
+  "justcoordinates.position.bottom_right": "右下",
+  "key.justcoordinates.open_config": "設定画面を開く"
 }
