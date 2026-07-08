@@ -1,13 +1,16 @@
 package com.justcoordinates.forge;
 
+import com.justcoordinates.ConfigScreen;
 import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
 
@@ -16,6 +19,8 @@ public class JustCoordinatesForge {
 
     public JustCoordinatesForge() {
         HudConfig.load(FMLPaths.CONFIGDIR.get());
+        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
+                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new ConfigScreen(parent)));
     }
 
     @Mod.EventBusSubscriber(modid = JustCoordinates.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)

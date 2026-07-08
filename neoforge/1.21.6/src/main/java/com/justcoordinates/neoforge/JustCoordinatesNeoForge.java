@@ -1,23 +1,28 @@
 package com.justcoordinates.neoforge;
 
+import com.justcoordinates.ConfigScreen;
 import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(JustCoordinates.MOD_ID)
 public class JustCoordinatesNeoForge {
 
-    public JustCoordinatesNeoForge() {
+    public JustCoordinatesNeoForge(ModContainer container) {
         HudConfig.load(FMLPaths.CONFIGDIR.get());
+        container.registerExtensionPoint(IConfigScreenFactory.class,
+                (minecraftOrContainer, parent) -> new ConfigScreen(parent));
     }
 
     @EventBusSubscriber(modid = JustCoordinates.MOD_ID, value = Dist.CLIENT)
