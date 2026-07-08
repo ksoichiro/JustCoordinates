@@ -10,6 +10,9 @@
   "entrypoints": {
     "client": [
       "com.justcoordinates.fabric.JustCoordinatesFabric"
+    ],
+    "modmenu": [
+      "com.justcoordinates.fabric.JustCoordinatesModMenu"
     ]
   },
   "depends": {

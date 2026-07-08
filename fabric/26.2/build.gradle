@@ -11,12 +11,20 @@ configurations {
     }
 }
 
+repositories {
+    maven { url = 'https://maven.terraformersmc.com/releases' }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     implementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     implementation "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
 
     compileOnly project(':common')
+
+    if (project.hasProperty('modmenu_version')) {
+        compileOnly "com.terraformersmc:modmenu:${modmenu_version}"
+    }
 
     commonJava project(path: ':common', configuration: 'commonJava')
     commonResources project(path: ':common', configuration: 'commonResources')
