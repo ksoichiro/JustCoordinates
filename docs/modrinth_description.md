@@ -13,9 +13,14 @@ No minimap, no extra info — just your position on screen. Clean and simple.
 ## ✨ Features
 
 ### 🗺️ Coordinates HUD
-- **Bedrock-Style Display**: Shows coordinates in the top-left corner with a gray background and white text
+- **Bedrock-Style Display**: Shows coordinates with a gray background and white text
 - **Simple Format**: `Position: X, Y, Z` — exactly what you need, nothing more
 - **Client-Side Only**: No server installation required
+
+### 🎯 Configurable Position
+- **6 Preset Positions**: Top-left (default), top-center, top-right, bottom-left, bottom-center, bottom-right
+- **Easy to Open**: Assign a key to "Open Settings" in Controls, or use the **Config** button (Forge/NeoForge Mods screen, or Fabric with [ModMenu](https://modrinth.com/mod/modmenu) installed)
+- **Remembers Your Choice**: Saved to `config/justcoordinates.json` after your first change
 
 ### 🎮 Smart Visibility
 - **Toggle Keybind**: Press `J` to toggle the coordinates HUD on or off (rebindable in Controls settings)
@@ -27,8 +32,8 @@ No minimap, no extra info — just your position on screen. Clean and simple.
 ## 📖 How to Use
 
 1. **Install the Mod**: Drop the jar file into your mods folder
-2. **Launch the Game**: Coordinates appear automatically in the top-left corner
-3. **That's It**: No configuration needed — it just works
+2. **Launch the Game**: Coordinates appear automatically in the top-left corner — no configuration needed
+3. **Optional**: Open the settings screen anytime to move the HUD to one of 6 preset positions
 
 ---
 

@@ -6,14 +6,25 @@ A lightweight client-side mod that displays only XYZ coordinates, inspired by Be
 
 ## Features
 
-- Displays coordinates in the top-left corner with a gray background and white text, matching the Bedrock Edition style
+- Displays coordinates with a gray background and white text, matching the Bedrock Edition style
 - Format: `Position: X, Y, Z`
 - Toggle visibility with a keybind (default: `J` key)
+- Choose where the HUD appears — 6 preset positions (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
 - Client-side only — no server installation required
 
 ## Toggle Keybind
 
 Press `J` to toggle the coordinates HUD on or off. The key can be rebound in Options > Controls > Key Binds under the "Just Coordinates" category.
+
+## HUD Position
+
+Open the settings screen to choose where the coordinates HUD appears (default: top-left, matching previous releases):
+
+- Assign a key to "Open Settings" in Options > Controls > Key Binds under the "Just Coordinates" category (unbound by default)
+- On Forge and NeoForge, use the **Config** button on the Mods screen
+- On Fabric, install [ModMenu](https://modrinth.com/mod/modmenu) for a **Config** button on the Mods screen (optional)
+
+The chosen position is saved to `config/justcoordinates.json` after the first change.
 
 ## F3 Debug Screen
 
