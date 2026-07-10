@@ -71,7 +71,7 @@ public final class HudConfig {
             try (Writer writer = Files.newBufferedWriter(configFile)) {
                 GSON.toJson(json, writer);
             }
-        } catch (IOException e) {
+        } catch (IOException | RuntimeException e) {
             LOGGER.error("Failed to save {}", FILE_NAME, e);
         }
     }

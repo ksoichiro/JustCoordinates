@@ -10,6 +10,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
@@ -21,8 +22,12 @@ public class JustCoordinatesNeoForge {
 
     public JustCoordinatesNeoForge(ModContainer container) {
         HudConfig.load(FMLPaths.CONFIGDIR.get());
-        container.registerExtensionPoint(IConfigScreenFactory.class,
-                (minecraftOrContainer, parent) -> new ConfigScreen(parent));
+        // The factory lambda references client-only Screen classes; linking it on a
+        // dedicated server would crash class loading, so only register on the client.
+        if (FMLEnvironment.getDist() == Dist.CLIENT) {
+            container.registerExtensionPoint(IConfigScreenFactory.class,
+                    (minecraftOrContainer, parent) -> new ConfigScreen(parent));
+        }
     }
 
     @EventBusSubscriber(modid = JustCoordinates.MOD_ID, value = Dist.CLIENT)
