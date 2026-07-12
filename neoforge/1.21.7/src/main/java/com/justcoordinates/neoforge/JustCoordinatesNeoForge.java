@@ -1,6 +1,5 @@
 package com.justcoordinates.neoforge;
 
-import com.justcoordinates.ConfigScreen;
 import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
@@ -15,18 +14,17 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
-import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
 @Mod(JustCoordinates.MOD_ID)
 public class JustCoordinatesNeoForge {
 
     public JustCoordinatesNeoForge(ModContainer container) {
         HudConfig.load(FMLPaths.CONFIGDIR.get());
-        // The factory lambda references client-only Screen classes; linking it on a
-        // dedicated server would crash class loading, so only register on the client.
+        // Client-only setup lives in a separate class: a Screen-typed lambda here
+        // would be resolved during FML's reflective constructor lookup and crash a
+        // dedicated server even behind this guard.
         if (FMLEnvironment.dist == Dist.CLIENT) {
-            container.registerExtensionPoint(IConfigScreenFactory.class,
-                    (minecraftOrContainer, parent) -> new ConfigScreen(parent));
+            JustCoordinatesNeoForgeClient.registerConfigScreen(container);
         }
     }
 
