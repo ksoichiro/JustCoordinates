@@ -38,6 +38,7 @@ dependencies {
 sourceSets.main {
     java {
         srcDir rootProject.file('neoforge/base/src/main/java')
+        srcDir rootProject.file('common/shared/src/main/java')
     }
 }
 

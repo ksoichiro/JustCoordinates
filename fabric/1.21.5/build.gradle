@@ -35,6 +35,7 @@ dependencies {
 sourceSets.main {
     java {
         srcDir rootProject.file('fabric/base/src/main/java')
+        srcDir rootProject.file('common/shared/src/main/java')
     }
 }
 
