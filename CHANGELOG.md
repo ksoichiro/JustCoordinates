@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Configurable HUD position: choose from 6 preset positions (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right) in an in-game settings screen
+- Settings screen entry points: assignable "Open Settings" keybinding (unbound by default), Config button on the Forge/NeoForge Mods screen, and optional [ModMenu](https://modrinth.com/mod/modmenu) integration on Fabric
+- Selected position is saved to `config/justcoordinates.json` and restored on launch
+
 ## [0.5.0] - 2026-06-20
 
 ### Added

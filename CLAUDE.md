@@ -55,14 +55,15 @@ Per-version platforms (incl. Forge) come from `enabled_platforms` in
 
 ## Architecture
 
-- `common/shared/` — Constants (JustCoordinates.java), compiled into each platform via srcDir
-- `common/{version}/` — CoordinatesHudRenderer, version-specific MC API
+- `common/shared/` — Version-independent code (JustCoordinates constants, HudConfig/HudPosition config model). Every platform build.gradle MUST add this dir via `srcDir` — `compileOnly project(':common')` alone compiles but silently omits these classes from the jar
+- `common/{version}/` — CoordinatesHudRenderer + ConfigScreen, version-specific MC API
 - `fabric/base/` — Shared Fabric entry point (pre-26.1 versions)
 - `fabric/{version}/` — Fabric mod metadata; own Java source when base is incompatible (26.1+)
 - `neoforge/base/` — Shared NeoForge entry point (pre-26.1 versions)
 - `neoforge/{version}/` — NeoForge mod metadata; own Java source when base is incompatible
 - `forge/{version}/` — Forge entry point and metadata (no base, each version has own source)
 - `props/{version}.properties` — Version-specific dependency versions
+- `*ForgeClient` / `*NeoForgeClient` classes — client-only registrations (config screen) isolated from the `@Mod` entry class; a `Screen`-typed lambda in the entry class crashes dedicated servers at class load even behind a dist guard. Keep new client-only registrations in these classes
 
 ### Build Plugins by MC Version
 
