@@ -1,17 +1,15 @@
 package com.justcoordinates.forge;
 
-import com.justcoordinates.ConfigScreen;
 import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.fml.loading.FMLPaths;
 
 @Mod(JustCoordinates.MOD_ID)
@@ -19,8 +17,12 @@ public class JustCoordinatesForge {
 
     public JustCoordinatesForge() {
         HudConfig.load(FMLPaths.CONFIGDIR.get());
-        ModLoadingContext.get().registerExtensionPoint(ConfigScreenHandler.ConfigScreenFactory.class,
-                () -> new ConfigScreenHandler.ConfigScreenFactory((minecraft, parent) -> new ConfigScreen(parent)));
+        // Client-only setup lives in a separate class: a Screen-typed lambda here
+        // would be resolved during mod class loading and crash a dedicated server
+        // even behind this guard.
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            JustCoordinatesForgeClient.registerConfigScreen();
+        }
     }
 
     @Mod.EventBusSubscriber(modid = JustCoordinates.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.MOD)
