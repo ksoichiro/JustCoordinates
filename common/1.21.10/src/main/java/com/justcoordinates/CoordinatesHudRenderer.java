@@ -54,7 +54,10 @@ public class CoordinatesHudRenderer {
     public static void render(GuiGraphics guiGraphics) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.options.hideGui) return;
-        if (mc.getDebugOverlay().showDebugScreen()) return;
+        // Not showDebugScreen(): since 1.21.9 it is also true while any debug entry is
+        // pinned "Always" (persisted in debug-profile.json), which would hide this HUD
+        // permanently. Only hide while the actual F3 overlay is open.
+        if (mc.debugEntries.isF3Visible()) return;
         if (mc.player == null) return;
         if (!visible) return;
 
