@@ -30,6 +30,8 @@ The chosen position is saved to `config/justcoordinates.json` when you close the
 
 This mod does not replace the F3 debug screen. It only shows XYZ coordinates — no direction, biome, light level, or other debug information. The coordinates HUD is automatically hidden while the F3 screen is displayed.
 
+On Minecraft 1.21.9 and later, debug entries pinned to "Always" in the Debug Options screen (F3+F6) do not hide the coordinates HUD — it stays visible alongside them. If the two overlap at the top-left, move the HUD with the position setting.
+
 ## HUD Visibility (F1 Key)
 
 When the HUD is hidden using F1, the coordinates will also be hidden. This follows vanilla HUD behavior.
