@@ -4,7 +4,6 @@ import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.CoordinatesShare;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,16 +55,13 @@ public class JustCoordinatesForge {
 
         @SubscribeEvent
         public static void registerClientCommands(RegisterClientCommandsEvent event) {
-            LiteralCommandNode<CommandSourceStack> shareRoot = event.getDispatcher().register(
+            event.getDispatcher().register(
                     Commands.literal("justcoordinates")
                             .then(Commands.literal("share")
                                     .executes(context -> {
                                         CoordinatesShare.share();
                                         return 1;
                                     })));
-            // Best-effort short alias: if another client-side mod already owns "/jc", only the
-            // alias is lost, never "/justcoordinates share".
-            event.getDispatcher().register(Commands.literal("jc").redirect(shareRoot));
         }
     }
 }

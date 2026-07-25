@@ -4,7 +4,6 @@ import com.justcoordinates.CoordinatesHudRenderer;
 import com.justcoordinates.CoordinatesShare;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
-import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommands;
@@ -27,16 +26,13 @@ public class JustCoordinatesFabric implements ClientModInitializer {
                 Identifier.fromNamespaceAndPath(JustCoordinates.MOD_ID, "coordinates_hud"),
                 (guiGraphics, tickCounter) -> CoordinatesHudRenderer.render(guiGraphics));
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, buildContext) -> {
-            LiteralCommandNode<FabricClientCommandSource> shareRoot = dispatcher.register(
+            dispatcher.register(
                     ClientCommands.literal("justcoordinates")
                             .then(ClientCommands.literal("share")
                                     .executes(context -> {
                                         CoordinatesShare.share();
                                         return 1;
                                     })));
-            // Best-effort short alias: if another client-side mod already owns "/jc", only the
-            // alias is lost, never "/justcoordinates share".
-            dispatcher.register(ClientCommands.literal("jc").redirect(shareRoot));
         });
     }
 }
