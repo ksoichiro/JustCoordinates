@@ -38,6 +38,7 @@ public class JustCoordinatesForge {
         public static void registerKeyMappings(RegisterKeyMappingsEvent event) {
             event.register(CoordinatesHudRenderer.getToggleKey());
             event.register(CoordinatesHudRenderer.getOpenConfigKey());
+            event.register(CoordinatesHudRenderer.getShareKey());
         }
     }
 

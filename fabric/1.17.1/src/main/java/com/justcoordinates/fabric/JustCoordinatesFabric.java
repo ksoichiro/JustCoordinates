@@ -14,6 +14,7 @@ public class JustCoordinatesFabric implements ClientModInitializer {
         HudConfig.load(FabricLoader.getInstance().getConfigDir());
         KeyBindingHelper.registerKeyBinding(CoordinatesHudRenderer.getToggleKey());
         KeyBindingHelper.registerKeyBinding(CoordinatesHudRenderer.getOpenConfigKey());
+        KeyBindingHelper.registerKeyBinding(CoordinatesHudRenderer.getShareKey());
         ClientTickEvents.END_CLIENT_TICK.register(client -> CoordinatesHudRenderer.handleTick());
         HudRenderCallback.EVENT.register((poseStack, tickDelta) ->
                 CoordinatesHudRenderer.render(poseStack));

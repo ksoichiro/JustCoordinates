@@ -24,6 +24,7 @@ public class JustCoordinatesForge {
         RegisterKeyMappingsEvent.BUS.addListener(event -> {
             event.register(CoordinatesHudRenderer.getToggleKey());
             event.register(CoordinatesHudRenderer.getOpenConfigKey());
+            event.register(CoordinatesHudRenderer.getShareKey());
         });
         CustomizeGuiOverlayEvent.Chat.BUS.addListener(event ->
                 CoordinatesHudRenderer.render(event.getGuiGraphics()));

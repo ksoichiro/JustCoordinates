@@ -32,6 +32,7 @@ public class JustCoordinatesForge {
         public static void onClientSetup(FMLClientSetupEvent event) {
             ClientRegistry.registerKeyBinding(CoordinatesHudRenderer.getToggleKey());
             ClientRegistry.registerKeyBinding(CoordinatesHudRenderer.getOpenConfigKey());
+            ClientRegistry.registerKeyBinding(CoordinatesHudRenderer.getShareKey());
         }
     }
 
