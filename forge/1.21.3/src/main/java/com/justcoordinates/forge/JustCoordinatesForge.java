@@ -1,11 +1,16 @@
 package com.justcoordinates.forge;
 
 import com.justcoordinates.CoordinatesHudRenderer;
+import com.justcoordinates.CoordinatesShare;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
+import com.mojang.brigadier.tree.LiteralCommandNode;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.AddGuiOverlayLayersEvent;
+import net.minecraftforge.client.event.RegisterClientCommandsEvent;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -50,6 +55,20 @@ public class JustCoordinatesForge {
             if (event.phase == TickEvent.Phase.END) {
                 CoordinatesHudRenderer.handleTick();
             }
+        }
+
+        @SubscribeEvent
+        public static void registerClientCommands(RegisterClientCommandsEvent event) {
+            LiteralCommandNode<CommandSourceStack> shareRoot = event.getDispatcher().register(
+                    Commands.literal("justcoordinates")
+                            .then(Commands.literal("share")
+                                    .executes(context -> {
+                                        CoordinatesShare.share();
+                                        return 1;
+                                    })));
+            // Best-effort short alias: if another client-side mod already owns "/jc", only the
+            // alias is lost, never "/justcoordinates share".
+            event.getDispatcher().register(Commands.literal("jc").redirect(shareRoot));
         }
     }
 }
