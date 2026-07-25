@@ -1,8 +1,12 @@
 package com.justcoordinates.neoforge;
 
 import com.justcoordinates.CoordinatesHudRenderer;
+import com.justcoordinates.CoordinatesShare;
 import com.justcoordinates.HudConfig;
 import com.justcoordinates.JustCoordinates;
+import com.mojang.brigadier.tree.LiteralCommandNode;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -11,6 +15,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.ClientTickEvent;
@@ -50,6 +55,20 @@ public class JustCoordinatesNeoForge {
         @SubscribeEvent
         public static void onClientTick(ClientTickEvent.Post event) {
             CoordinatesHudRenderer.handleTick();
+        }
+
+        @SubscribeEvent
+        public static void registerClientCommands(RegisterClientCommandsEvent event) {
+            LiteralCommandNode<CommandSourceStack> shareRoot = event.getDispatcher().register(
+                    Commands.literal("justcoordinates")
+                            .then(Commands.literal("share")
+                                    .executes(context -> {
+                                        CoordinatesShare.share();
+                                        return 1;
+                                    })));
+            // Best-effort short alias: if another client-side mod already owns "/jc", only the
+            // alias is lost, never "/justcoordinates share".
+            event.getDispatcher().register(Commands.literal("jc").redirect(shareRoot));
         }
     }
 }
