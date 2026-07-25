@@ -24,7 +24,7 @@ No minimap, no extra info — just your position on screen. Clean and simple.
 
 ### 🎮 Smart Visibility
 - **Toggle Keybind**: Press `J` to toggle the coordinates HUD on or off (rebindable in Controls settings)
-- **Share to Chat**: Run `/justcoordinates share` (or `/jc share`), or assign a "Share Coordinates" key — no server permission needed
+- **Share to Chat**: Run `/justcoordinates share`, or assign a "Share Coordinates" key — no server permission needed (on Forge 1.16.5 and 1.17.1, the keybind is the only option — those versions have no client-command API)
 - **F3 Compatibility**: Coordinates HUD is automatically hidden while the F3 debug screen is displayed
 - **F1 Support**: Follows vanilla HUD behavior — hidden when HUD is toggled off with F1
 
