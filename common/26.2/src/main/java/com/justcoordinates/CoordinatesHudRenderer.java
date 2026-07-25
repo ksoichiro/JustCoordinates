@@ -34,12 +34,23 @@ public class CoordinatesHudRenderer {
             CATEGORY
     );
 
+    private static final KeyMapping SHARE_KEY = new KeyMapping(
+            "key.justcoordinates.share",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_UNKNOWN,
+            CATEGORY
+    );
+
     public static KeyMapping getToggleKey() {
         return TOGGLE_KEY;
     }
 
     public static KeyMapping getOpenConfigKey() {
         return OPEN_CONFIG_KEY;
+    }
+
+    public static KeyMapping getShareKey() {
+        return SHARE_KEY;
     }
 
     public static void handleTick() {
@@ -50,6 +61,9 @@ public class CoordinatesHudRenderer {
             // MC 26.2 removed Minecraft.setScreen(Screen); setScreenAndShow(Screen) is the
             // only public entry point left (matches ConfigScreen.onClose in this version).
             Minecraft.getInstance().setScreenAndShow(new ConfigScreen(null));
+        }
+        while (SHARE_KEY.consumeClick()) {
+            CoordinatesShare.share();
         }
     }
 

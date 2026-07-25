@@ -10,5 +10,6 @@
   "justcoordinates.position.bottom_left": "Bottom Left",
   "justcoordinates.position.bottom_center": "Bottom Center",
   "justcoordinates.position.bottom_right": "Bottom Right",
-  "key.justcoordinates.open_config": "Open Settings"
+  "key.justcoordinates.open_config": "Open Settings",
+  "key.justcoordinates.share": "Share Coordinates"
 }

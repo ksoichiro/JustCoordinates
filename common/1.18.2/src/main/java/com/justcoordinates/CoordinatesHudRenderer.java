@@ -31,6 +31,13 @@ public class CoordinatesHudRenderer {
             "key.categories.justcoordinates"
     );
 
+    private static final KeyMapping SHARE_KEY = new KeyMapping(
+            "key.justcoordinates.share",
+            InputConstants.Type.KEYSYM,
+            GLFW.GLFW_KEY_UNKNOWN,
+            "key.categories.justcoordinates"
+    );
+
     public static KeyMapping getToggleKey() {
         return TOGGLE_KEY;
     }
@@ -39,12 +46,19 @@ public class CoordinatesHudRenderer {
         return OPEN_CONFIG_KEY;
     }
 
+    public static KeyMapping getShareKey() {
+        return SHARE_KEY;
+    }
+
     public static void handleTick() {
         while (TOGGLE_KEY.consumeClick()) {
             visible = !visible;
         }
         while (OPEN_CONFIG_KEY.consumeClick()) {
             Minecraft.getInstance().setScreen(new ConfigScreen(null));
+        }
+        while (SHARE_KEY.consumeClick()) {
+            CoordinatesShare.share();
         }
     }
 

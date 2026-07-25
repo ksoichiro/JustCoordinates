@@ -10,5 +10,6 @@
   "justcoordinates.position.bottom_left": "左下",
   "justcoordinates.position.bottom_center": "下中央",
   "justcoordinates.position.bottom_right": "右下",
-  "key.justcoordinates.open_config": "設定画面を開く"
+  "key.justcoordinates.open_config": "設定画面を開く",
+  "key.justcoordinates.share": "座標をチャットで共有"
 }
