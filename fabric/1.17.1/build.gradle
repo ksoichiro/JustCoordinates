@@ -45,6 +45,16 @@ tasks.named('compileJava') {
     source configurations.commonJava
 }
 
+// MC 1.17.1 targets Java 16, but on macOS arm64 Loom injects fabric-loom-native-support (the mod
+// that supplies arm64 LWJGL natives for pre-1.19 versions) into dev runs, and that mod requires
+// Java 17+. Without this the dev client aborts with "Incompatible mods found!". Only the dev-run
+// JVM is raised; compilation still targets 16 via options.release.
+tasks.withType(net.fabricmc.loom.task.AbstractRunTask).configureEach {
+    javaLauncher = javaToolchains.launcherFor {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 tasks.named('processResources') {
     filesMatching('fabric.mod.json') {
         expand(
