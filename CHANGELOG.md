@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-07-25
+
 ### Added
 
 - Share your current coordinates in chat with the `/justcoordinates share` command or an assignable "Share Coordinates" keybinding (unbound by default). The command runs client-side, so it needs no server permission
@@ -81,7 +83,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-loader support: Fabric, NeoForge, Forge
 - Minecraft version support: 1.19.2, 1.20.1, 1.21.1, 1.21.3-1.21.11
 
-[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.3.0...v0.4.0
