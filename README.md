@@ -9,12 +9,23 @@ A lightweight client-side mod that displays only XYZ coordinates, inspired by Be
 - Displays coordinates with a gray background and white text, matching the Bedrock Edition style
 - Format: `Position: X, Y, Z`
 - Toggle visibility with a keybind (default: `J` key)
+- Share your coordinates in chat with `/justcoordinates share` (or `/jc share`), or an assignable keybind
 - Choose where the HUD appears — 6 preset positions (top-left, top-center, top-right, bottom-left, bottom-center, bottom-right)
 - Client-side only — no server installation required
 
 ## Toggle Keybind
 
 Press `J` to toggle the coordinates HUD on or off. The key can be rebound in Options > Controls > Key Binds under the "Just Coordinates" category.
+
+## Sharing Coordinates
+
+Run `/justcoordinates share` (short form: `/jc share`) to post your current coordinates to chat as
+`X: 100, Y: 64, Z: -200`. The command is handled by the mod on your own client, so it works on any
+server without permissions. You can also assign a key to "Share Coordinates" in
+Options > Controls > Key Binds under the "Just Coordinates" category (unbound by default).
+
+On Forge 1.16.5 and 1.17.1 only the keybinding is available — those Forge versions have no
+client-command API.
 
 ## HUD Position
 

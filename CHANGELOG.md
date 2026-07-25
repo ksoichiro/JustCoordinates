@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Share your current coordinates in chat with the `/justcoordinates share` command (short form: `/jc share`) or an assignable "Share Coordinates" keybinding (unbound by default). The command runs client-side, so it needs no server permission
+- Note: on Forge 1.16.5 and 1.17.1 the keybinding is the only way to share — those Forge versions have no client-command API
+
 ## [0.6.0] - 2026-07-15
 
 ### Added
