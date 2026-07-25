@@ -155,6 +155,11 @@ The chat message itself is not translated (see Message Format).
   which the per-version `CoordinatesShare` copy already accommodates
 - `/jc` alias may be shadowed by another client-side mod; canonical command unaffected
 
+- Fabric client-command API split (v1 vs v2) boundary is assumed at 1.19.2; if 1.19.2 still
+  needs v1, only that version's registration class changes
+- Wide but mechanical touch surface (19 renderers, ~38 loader entry points, 38 lang files);
+  the risk is omission rather than complexity, so the build-all pass is the guard
+
 ## Amendment (2026-07-25, pre-merge review)
 
 The `/jc` alias described above was removed before merge. A client-side command claims the
@@ -162,7 +167,3 @@ whole literal it registers: once `/jc` matches, the client command layer handles
 never forwards it to the server. On a server whose plugin owns `/jc`, every `/jc ...` command
 would die client-side with a parse error, with no way to disable it. `/justcoordinates share`
 remains the only command; there is no alias.
-- Fabric client-command API split (v1 vs v2) boundary is assumed at 1.19.2; if 1.19.2 still
-  needs v1, only that version's registration class changes
-- Wide but mechanical touch surface (19 renderers, ~38 loader entry points, 38 lang files);
-  the risk is omission rather than complexity, so the build-all pass is the guard
