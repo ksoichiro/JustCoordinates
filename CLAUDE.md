@@ -1,6 +1,6 @@
 # Project: Just Coordinates
 
-Minecraft client-side mod displaying XYZ coordinates HUD. Multi-loader (Fabric, NeoForge, Forge) across MC 1.16.5–26.1.
+Minecraft client-side mod displaying XYZ coordinates HUD. Multi-loader (Fabric, NeoForge, Forge) across MC 1.16.5–26.3.
 
 ## Build
 
