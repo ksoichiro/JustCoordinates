@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-09-17
+
 ### Added
 
 - Minecraft 26.3 support for Fabric (NeoForge and Forge not yet available upstream: NeoForge's 26.3 beta patches fail to recompile Minecraft's `HolderSet`; Forge has no 26.3 build yet)
