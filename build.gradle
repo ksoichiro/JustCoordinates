@@ -24,9 +24,11 @@ subprojects {
         }
     }
     plugins.withId('fabric-loom') {
-        dependencies {
-            modImplementation include("com.electronwill.night-config:core:3.8.3")
-            modImplementation include("com.electronwill.night-config:toml:3.8.3")
+        if (minecraft_version.startsWith('1.')) {
+            dependencies {
+                modImplementation include("com.electronwill.night-config:core:3.8.3")
+                modImplementation include("com.electronwill.night-config:toml:3.8.3")
+            }
         }
     }
     plugins.withId('net.fabricmc.fabric-loom') {
