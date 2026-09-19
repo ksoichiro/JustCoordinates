@@ -8,6 +8,36 @@ plugins {
 subprojects {
     apply plugin: 'java'
 
+    if (project.name == 'common') {
+        dependencies {
+            compileOnly "com.electronwill.night-config:core:3.8.3"
+            compileOnly "com.electronwill.night-config:toml:3.8.3"
+        }
+    }
+
+    // Forge and NeoForge ship NightConfig. Fabric does not, so embed it in
+    // Fabric jars for every supported Loom variant.
+    plugins.withId('dev.architectury.loom') {
+        dependencies {
+            modImplementation include("com.electronwill.night-config:core:3.8.3")
+            modImplementation include("com.electronwill.night-config:toml:3.8.3")
+        }
+    }
+    plugins.withId('fabric-loom') {
+        dependencies {
+            modImplementation include("com.electronwill.night-config:core:3.8.3")
+            modImplementation include("com.electronwill.night-config:toml:3.8.3")
+        }
+    }
+    plugins.withId('net.fabricmc.fabric-loom') {
+        dependencies {
+            implementation "com.electronwill.night-config:core:3.8.3"
+            implementation "com.electronwill.night-config:toml:3.8.3"
+            include "com.electronwill.night-config:core:3.8.3"
+            include "com.electronwill.night-config:toml:3.8.3"
+        }
+    }
+
     // The shared "-base" modules (fabric/base, neoforge/base) map a single
     // directory to every Minecraft version. During `buildAll`, versions build
     // concurrently in separate Gradle processes; --project-cache-dir isolates
