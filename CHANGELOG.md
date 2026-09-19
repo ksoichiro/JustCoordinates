@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-09-19
+
+### Added
+
+- Minecraft 26.3 support for NeoForge
+
+### Changed
+
+- Updated ModDevGradle to 2.0.147 (fixes a NeoForge 26.3 access-transformer handling bug that broke Minecraft's recompile step)
+
 ## [0.8.0] - 2026-09-17
 
 ### Added
@@ -89,7 +99,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Multi-loader support: Fabric, NeoForge, Forge
 - Minecraft version support: 1.19.2, 1.20.1, 1.21.1, 1.21.3-1.21.11
 
-[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/ksoichiro/JustCoordinates/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/ksoichiro/JustCoordinates/compare/v0.4.0...v0.5.0
