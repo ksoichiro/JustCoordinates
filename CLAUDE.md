@@ -55,9 +55,9 @@ Per-version platforms (incl. Forge) come from `enabled_platforms` in
 
 ## Architecture
 
-- `common/shared/` — Version-independent code (JustCoordinates constants, HudConfig/HudPosition config model). Every platform build.gradle MUST add this dir via `srcDir` — `compileOnly project(':common')` alone compiles but silently omits these classes from the jar
+- `common/shared/` — Version-independent code (JustCoordinates constants, HudConfig/HudPosition config model). Every platform build.gradle MUST add this dir via `srcDir` — `compileOnly project(':common')` alone compiles but silently omits these classes from the jar. It is compiled against every supported MC version including 1.16.5 (`java_version=8`), so it MUST stick to Java 8 syntax — no pattern-matching `instanceof`, `var`, switch expressions, text blocks, or records. A `git log -p -- common/shared` diff can look correct under a modern JDK and still break only the 1.16.5 build
 - `common/{version}/` — CoordinatesHudRenderer + ConfigScreen, version-specific MC API
-- `fabric/base/` — Shared Fabric entry point (pre-26.1 versions)
+- `fabric/base/` — Shared Fabric entry point (pre-26.1 versions). Has no `fabric.mod.json` of its own, so `modImplementation include(...)` (jar nesting) on it fails `remapJar` with "Cannot nest jars into none mod jar" — only the per-version `fabric/{version}/` leaf project should nest embedded dependency jars
 - `fabric/{version}/` — Fabric mod metadata; own Java source when base is incompatible (26.1+)
 - `neoforge/base/` — Shared NeoForge entry point (pre-26.1 versions)
 - `neoforge/{version}/` — NeoForge mod metadata; own Java source when base is incompatible

@@ -49,14 +49,14 @@ public final class HudConfig {
             }
             Object value = toml.get("position");
             if (value != null) {
-                if (!(value instanceof String name)) {
+                if (!(value instanceof String)) {
                     LOGGER.warn("Invalid position '{}' in {}; using default", value, FILE_NAME);
                     position = HudPosition.DEFAULT;
                     return;
                 }
-                HudPosition parsed = HudPosition.fromSerializedName(name);
+                HudPosition parsed = HudPosition.fromSerializedName((String) value);
                 if (parsed == null) {
-                    LOGGER.warn("Unknown position '{}' in {}; using default", name, FILE_NAME);
+                    LOGGER.warn("Unknown position '{}' in {}; using default", value, FILE_NAME);
                     parsed = HudPosition.DEFAULT;
                 }
                 position = parsed;

@@ -16,18 +16,35 @@ subprojects {
     }
 
     // Forge and NeoForge ship NightConfig. Fabric does not, so embed it in
-    // Fabric jars for every supported Loom variant.
+    // Fabric jars for every supported Loom variant. The 'common' project has
+    // no fabric.mod.json and produces no distributable jar; nesting jars into
+    // it fails remapJar with "Cannot nest jars into none mod jar", so it only
+    // gets NightConfig on the compile classpath (already added above).
     plugins.withId('dev.architectury.loom') {
-        dependencies {
-            modImplementation include("com.electronwill.night-config:core:3.8.3")
-            modImplementation include("com.electronwill.night-config:toml:3.8.3")
-        }
-    }
-    plugins.withId('fabric-loom') {
-        if (minecraft_version.startsWith('1.')) {
+        if (project.name != 'common') {
             dependencies {
                 modImplementation include("com.electronwill.night-config:core:3.8.3")
                 modImplementation include("com.electronwill.night-config:toml:3.8.3")
+            }
+        }
+    }
+    plugins.withId('fabric-loom') {
+        // fabric-base has no fabric.mod.json of its own; nesting jars into it
+        // fails remapJar with "Cannot nest jars into none mod jar". It still
+        // compiles HudConfig.java (via srcDir), so it needs NightConfig on the
+        // compile classpath, but only the per-version fabric project (which
+        // produces the distributable jar) needs it embedded.
+        if (minecraft_version.startsWith('1.')) {
+            if (project.name.endsWith('-base')) {
+                dependencies {
+                    compileOnly "com.electronwill.night-config:core:3.8.3"
+                    compileOnly "com.electronwill.night-config:toml:3.8.3"
+                }
+            } else {
+                dependencies {
+                    modImplementation include("com.electronwill.night-config:core:3.8.3")
+                    modImplementation include("com.electronwill.night-config:toml:3.8.3")
+                }
             }
         }
     }
