@@ -35,7 +35,8 @@ Open the settings screen to choose where the coordinates HUD appears (default: t
 - On Forge and NeoForge, use the **Config** button on the Mods screen
 - On Fabric, install [ModMenu](https://modrinth.com/mod/modmenu) for a **Config** button on the Mods screen (optional)
 
-The chosen position is saved to `config/justcoordinates.toml` when you close the settings screen.
+The chosen position is saved to `config/justcoordinates.toml` when you close the settings screen. Existing
+`config/justcoordinates.json` position settings are migrated automatically on first launch and left in place.
 
 ## F3 Debug Screen
 

@@ -20,7 +20,7 @@ No minimap, no extra info — just your position on screen. Clean and simple.
 ### 🎯 Configurable Position
 - **6 Preset Positions**: Top-left (default), top-center, top-right, bottom-left, bottom-center, bottom-right
 - **Easy to Open**: Assign a key to "Open Settings" in Controls, or use the **Config** button (Forge/NeoForge Mods screen, or Fabric with [ModMenu](https://modrinth.com/mod/modmenu) installed)
-- **Remembers Your Choice**: Saved to `config/justcoordinates.toml` when you close the settings screen
+- **Remembers Your Choice**: Saved to `config/justcoordinates.toml` when you close the settings screen. Existing JSON position settings are migrated automatically on first launch and left in place
 
 ### 🎮 Smart Visibility
 - **Toggle Keybind**: Press `J` to toggle the coordinates HUD on or off (rebindable in Controls settings)

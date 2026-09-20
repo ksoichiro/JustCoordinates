@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - HUD position settings are now stored in `config/justcoordinates.toml` instead of JSON
 
+### Fixed
+
+- Existing HUD position settings are migrated from `config/justcoordinates.json` to TOML on first launch
+
 ## [0.9.0] - 2026-09-19
 
 ### Added
