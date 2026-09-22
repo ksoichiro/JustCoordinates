@@ -88,6 +88,12 @@ subprojects {
         mavenCentral()
     }
 
+    // Production run support (runProd) — launches the built mod JAR in a
+    // near-production Minecraft instance (see gradle/shared/prod-run.gradle).
+    if (project.name in ['fabric', 'neoforge', 'forge']) {
+        apply from: "${rootDir}/gradle/shared/prod-run.gradle"
+    }
+
     afterEvaluate {
         if (!project.name.endsWith('-base') && project.name != 'common') {
             base {
